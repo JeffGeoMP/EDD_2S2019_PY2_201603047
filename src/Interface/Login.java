@@ -5,16 +5,19 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import Structures.Hash_Table;
 /**
  *
  * @author JeffGeo
  */
 public class Login extends javax.swing.JFrame {
+    
+    public static Hash_Table Table;
 
     public Login() {
         initComponents();
         Load_Images(Login);
+        Table = new Hash_Table();
     }
 
     @SuppressWarnings("unchecked")
@@ -113,6 +116,9 @@ public class Login extends javax.swing.JFrame {
         
         if(User.equalsIgnoreCase("Admin") && Pass.equalsIgnoreCase("Admin")){
             JOptionPane.showMessageDialog(null, "Welcome Administrator", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+          Table.Add(User, "123");
+          Table.Print_Table();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

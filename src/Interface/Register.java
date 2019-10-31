@@ -13,12 +13,16 @@ import javax.swing.event.DocumentListener;
  * @author JeffGeo
  */
 public class Register extends javax.swing.JFrame {
+    
+    public static String[] Data;
 
   
     public Register() {
-        initComponents();
+        initComponents();          
         Load_Images(register);
         Listeners();
+        check.setEnabled(false);
+        Data = new String[2];
     }
 
     
@@ -38,7 +42,6 @@ public class Register extends javax.swing.JFrame {
         check = new javax.swing.JButton();
         register = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Check In");
 
         jLabel1.setText("UserName");
@@ -120,8 +123,15 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
-       JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
-       dispose();
+       if(!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
+            Data[0] = username.getText();
+            Data[1] = pass.getText();
+            this.setVisible(false);
+       }else{
+            JOptionPane.showMessageDialog(null, "Please Check to Information", "Information", JOptionPane.ERROR_MESSAGE);
+       }
+       
     }//GEN-LAST:event_checkActionPerformed
 
         
@@ -188,7 +198,7 @@ public class Register extends javax.swing.JFrame {
     
     private void Pass(){
         if(pass.getText().isEmpty()){
-            PassV.setText("Campo Obligatorio");
+            PassV.setText("Obligatory Field");
             PassV.setForeground(Color.RED);
             check.setEnabled(false);
         }else{
@@ -237,8 +247,8 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField pass;
+    public javax.swing.JPasswordField pass;
     private javax.swing.JLabel register;
-    private javax.swing.JTextField username;
+    public javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
