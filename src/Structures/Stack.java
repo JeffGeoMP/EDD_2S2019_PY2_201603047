@@ -7,3 +7,10 @@ package Structures;
 public class Stack {
  
 }
+
+class Node{
+    
+    public Node(){
+        
+    }
+}

@@ -111,14 +111,20 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String User = Username.getText();
-        String Pass = Password.getText();
-        
-        if(User.equalsIgnoreCase("Admin") && Pass.equalsIgnoreCase("Admin")){
+        if(Username.getText().equalsIgnoreCase("Admin") && Password.getText().equalsIgnoreCase("Admin")){
             JOptionPane.showMessageDialog(null, "Welcome Administrator", "Information", JOptionPane.INFORMATION_MESSAGE);
         }else{
-          Table.Add(User, "123");
           Table.Print_Table();
+              String Data[] = Table.Search(Username.getText(), Password.getText());
+              if(!Data[0].isEmpty() && !Data[1].isEmpty()){
+                  JOptionPane.showMessageDialog(null, "Welcome "+Data[0]+" to EDD Drive","Information",JOptionPane.INFORMATION_MESSAGE);
+                  Username.setText("");
+                  Password.setText("");
+              }else{
+                  JOptionPane.showMessageDialog(null, "Invalid Credentials","Informaction",JOptionPane.ERROR_MESSAGE);
+                  Username.setText("");
+                  Password.setText("");
+              }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

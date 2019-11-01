@@ -14,15 +14,11 @@ import javax.swing.event.DocumentListener;
  */
 public class Register extends javax.swing.JFrame {
     
-    public static String[] Data;
-
-  
     public Register() {
         initComponents();          
         Load_Images(register);
         Listeners();
         check.setEnabled(false);
-        Data = new String[2];
     }
 
     
@@ -125,13 +121,12 @@ public class Register extends javax.swing.JFrame {
     private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
        if(!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
-            Data[0] = username.getText();
-            Data[1] = pass.getText();
-            this.setVisible(false);
+            Login.Table.Add(username.getText(), pass.getText());
+            this.dispose();
+             
        }else{
             JOptionPane.showMessageDialog(null, "Please Check to Information", "Information", JOptionPane.ERROR_MESSAGE);
        }
-       
     }//GEN-LAST:event_checkActionPerformed
 
         
@@ -232,9 +227,15 @@ public class Register extends javax.swing.JFrame {
            UserV.setForeground(Color.RED);
            check.setEnabled(false);
         }else{
-            UserV.setText("User Available");
-            UserV.setForeground(Color.BLUE);
-            check.setEnabled(true);
+            if(Login.Table.Validate_user(username.getText())){
+                UserV.setText("Username not Available");
+                UserV.setForeground(Color.RED);
+                check.setEnabled(false);
+            }else{
+                UserV.setText("Username Available");
+                UserV.setForeground(Color.BLUE);
+                check.setEnabled(true);
+            }
         }
     }
     
