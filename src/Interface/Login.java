@@ -6,18 +6,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import Structures.Hash_Table;
+import Structures.Stack;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author JeffGeo
  */
 public class Login extends javax.swing.JFrame {
     
-    public static Hash_Table Table;
-
-    public Login() {
+    private Hash_Table Users;
+    private Stack Operations;
+    
+    public Login(Hash_Table Users, Stack Operations) {
         initComponents();
-        Load_Images(Login);
-        Table = new Hash_Table();
+        Load_Images(Login);             //Load Imagenes for From
+        this.Users = Users;             //Load Users
+        this.Operations = Operations;   //Load Operations
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +36,6 @@ public class Login extends javax.swing.JFrame {
         Username = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         New_User = new javax.swing.JLabel();
-        Forgot_Pass = new javax.swing.JLabel();
         Login = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,20 +60,16 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        Forgot_Pass.setForeground(new java.awt.Color(51, 51, 255));
-        Forgot_Pass.setText("Forgot your password?");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(New_User, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(New_User, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                        .addComponent(Forgot_Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -76,20 +77,18 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(Username)
                             .addComponent(Password)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(116, 116, 116))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,11 +98,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(New_User)
-                    .addComponent(Forgot_Pass))
-                .addGap(27, 27, 27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(New_User)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,32 +108,33 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(Username.getText().equalsIgnoreCase("Admin") && Password.getText().equalsIgnoreCase("Admin")){
-            JOptionPane.showMessageDialog(null, "Welcome Administrator", "Information", JOptionPane.INFORMATION_MESSAGE);
+        if(Username.getText().isEmpty() && Password.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "The Fields is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
         }else{
-          Table.Print_Table();
-              String Data[] = Table.Search(Username.getText(), Password.getText());
-              if(!Data[0].isEmpty() && !Data[1].isEmpty()){
-                  JOptionPane.showMessageDialog(null, "Welcome "+Data[0]+" to EDD Drive","Information",JOptionPane.INFORMATION_MESSAGE);
-                  Username.setText("");
-                  Password.setText("");
-              }else{
-                  JOptionPane.showMessageDialog(null, "Invalid Credentials","Informaction",JOptionPane.ERROR_MESSAGE);
-                  Username.setText("");
-                  Password.setText("");
-              }
+          Users.Print_Table();
+            try {
+                if(Users.Search(Username.getText(), Password.getText())){
+                    JOptionPane.showMessageDialog(null, "Welcome "+Username.getText()+" to EDD System","Information",JOptionPane.INFORMATION_MESSAGE);
+                    EDD_Platform System = new EDD_Platform(Username.getText(), Users, Operations);
+                    System.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Invalid Credentials","Informaction",JOptionPane.ERROR_MESSAGE);
+                    Username.setText("");
+                    Password.setText("");
+                }
+            } catch (NoSuchAlgorithmException ex) {
+                JOptionPane.showMessageDialog(null, "Fatal Error", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void New_UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_New_UserMouseClicked
       int Resp = JOptionPane.showConfirmDialog(null, "Do you Want to Create a new User","Information",JOptionPane.YES_NO_OPTION);
-      
       if(Resp == JOptionPane.YES_OPTION){
-          Register r = new Register();
+          Register r = new Register(Users, Operations);
           r.setVisible(true);
-      }
-      if(Resp == JOptionPane.NO_OPTION){
-          System.out.println("Sin Abrir Form");
+          this.dispose();
       }
     }//GEN-LAST:event_New_UserMouseClicked
 
@@ -148,7 +146,6 @@ public class Login extends javax.swing.JFrame {
     }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Forgot_Pass;
     private javax.swing.JLabel Login;
     private javax.swing.JLabel New_User;
     private javax.swing.JPasswordField Password;

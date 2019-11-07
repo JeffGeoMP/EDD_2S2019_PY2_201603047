@@ -1,5 +1,7 @@
 package Structures;
 import Others.Users;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
  /*
  * @author JeffGeo
@@ -10,23 +12,25 @@ public class Hash_Table {
     private int Mod;
     private int Elements;
     
-        public Hash_Table(){
+        public Hash_Table() throws NoSuchAlgorithmException{
             Size_Prime = 7;
             Mod = Size_Prime-1;
             Elements = 0;
             Users = new Object[Size_Prime];
             Arrays.fill(Users, null);
+            this.Add_Vector("admin", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", Users);
         }
            
-    public void Add(String user, String pass){
-        Add_Vector(user,pass, Users); 
+    public void Add(String user, String pass) throws NoSuchAlgorithmException{
+        String newpass = Encrypting(pass);
+        Add_Vector(user,newpass, Users); 
         
         if(Percentage_Used()>=75){
            Users =  Array_Increase();
         }
     }
         
-    private void Add_Vector(String user, String pass, Object[] Array){
+    private void Add_Vector(String user, String pass, Object[] Array) throws NoSuchAlgorithmException{
         int Index = Function_Hash(user);              //Index of Array for User
         if(Array[Index]==null){ 
             Array[Index] = new Users(user,pass);
@@ -58,7 +62,7 @@ public class Hash_Table {
         }
     }
     
-    private Object[] Array_Increase(){
+    private Object[] Array_Increase() throws NoSuchAlgorithmException{
         Size_Prime = Next_Number_Prime();           //Get Next Number Prime
         Object[] Aux = new Object[Size_Prime];      //Initial Array Aux with size of Number Prime
         Arrays.fill(Aux, null);                     //Fill Array Aux 
@@ -76,7 +80,7 @@ public class Hash_Table {
         return  Aux;
     }
     
-    public void Bulk_Load(){
+    public void Bulk_Load(String users){
         
     }
 
@@ -110,45 +114,40 @@ public class Hash_Table {
         return New_Prime;
     }
     
-    public String[] Search(String user, String pass){
+    public boolean Search(String user, String passed) throws NoSuchAlgorithmException{
+       String pass = Encrypting(passed);
        int search_index = Function_Hash(user);
-       String[] Data = new String[2];
+       boolean Verification = false;
        Users current_user;
        if(Users[search_index]!=null){
            current_user = (Users)Users[search_index];
            if(current_user.getUser().equals(user) && current_user.getPass().equals(pass)){
-               Data[0] = current_user.getUser();
-               Data[1] = current_user.getPass();
+               Verification = true;
            }else{
                search_index = search_index*search_index;
                if(search_index>Users.length){
-                   Data[0] = "";
-                   Data[1] = "";
+                    Verification = false;
                }else{
                    current_user = (Users)Users[search_index];
                    if(current_user.getUser().equals(user) && current_user.getPass().equals(pass)){
-                        Data[0] = current_user.getUser();
-                        Data[1] = current_user.getPass();
+                    Verification = true;
                    }else{
                        for(int i = 0; i<Users.length; i++){
                            current_user = (Users)Users[i];
                            if(current_user.getUser().equals(user) && current_user.getPass().equals(pass)){
-                                Data[0] = current_user.getUser();
-                                Data[1] = current_user.getPass();
+                                Verification = true;
                                 break;
                            }else{
-                                Data[0] = "";
-                                Data[1] = "";
+                               Verification = false;
                            }
                        }
                    }
                }
            }
        }else{
-           Data[0] = "";
-           Data[1] = "";
+           Verification = false;
        }
-       return Data;
+       return Verification;
     }
     
     private int Percentage_Used(){
@@ -180,5 +179,18 @@ public class Hash_Table {
             }
         }
         return validation;
+    }
+    
+    private String Encrypting(String pass) throws NoSuchAlgorithmException{
+        MessageDigest md = null;
+        md = MessageDigest.getInstance("SHA-256");
+        md.update(pass.getBytes());
+        byte[]mb = md.digest();
+        StringBuilder sb = new StringBuilder();
+
+        for(byte b: mb){
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 }
