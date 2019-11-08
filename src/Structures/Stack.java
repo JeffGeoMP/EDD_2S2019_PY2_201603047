@@ -31,7 +31,7 @@ public class Stack {
     
     public void printStack(){
         if(Isempty()){
-            System.out.println("Not Found Operation in the System");
+            System.out.println("Not Found Operations in the System");
         }else{
             Node temp = this.head;
             while(temp!=null){

@@ -80,10 +80,6 @@ public class Hash_Table {
         return  Aux;
     }
     
-    public void Bulk_Load(String users){
-        
-    }
-
     private int  Function_Hash(String user){
         int Hash = 0;
         for(int i = 0; i<user.length();i++){

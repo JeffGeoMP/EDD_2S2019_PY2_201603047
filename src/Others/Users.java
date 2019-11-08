@@ -1,5 +1,4 @@
 package Others;
-
 /**
  *
  * @author JeffGeo

@@ -11,8 +11,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -78,11 +76,6 @@ public class EDD_Platform extends javax.swing.JFrame {
         Fup.setIcon(iconFup);
     }
     
-    private void Verification(){
-        if(this.Current_User.equals("admin")){
-            
-        }
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -125,7 +118,7 @@ public class EDD_Platform extends javax.swing.JFrame {
         Adelete.setToolTipText("Deletes a File");
 
         Amodify.setText("jLabel3");
-        Amodify.setToolTipText("Modifys a File");
+        Amodify.setToolTipText("Edit a File");
 
         Fnew.setText("jLabel4");
         Fnew.setToolTipText("Creates a new Folder");
@@ -134,7 +127,7 @@ public class EDD_Platform extends javax.swing.JFrame {
         Fdelete.setToolTipText("Deletes a Folder");
 
         Fmodify.setText("jLabel6");
-        Fmodify.setToolTipText("Modifys a Folder");
+        Fmodify.setToolTipText("Edit a Folder");
 
         Fup.setText("jLabel7");
         Fup.setToolTipText("Up a Folder");
@@ -232,19 +225,16 @@ public class EDD_Platform extends javax.swing.JFrame {
         int result = file.showOpenDialog(this);
         if(result != JFileChooser.CANCEL_OPTION){
             File filename = file.getSelectedFile();
-            Direction.setText(filename.getAbsolutePath());
-            
             try {
                 BufferedReader br = new BufferedReader(new FileReader(filename.getAbsoluteFile()));
                 String line = br.readLine();
                 while(null!=line){
                     String[] fields = line.split(",");
-                    
                     if(!fields[0].equalsIgnoreCase("Usuario")  && !fields[1].equalsIgnoreCase("Password")){
                         if(!Users.Validate_user(fields[0])){
                             if(fields[1].length()>=8){
                                 Users.Add(fields[0], fields[1]);
-                                System.out.println("user agregado");
+                                Operations.add("Add User", Current_User);
                                 cont_user++;
                             }else{
                                 Errores.add(new Errors(fields[0], "The Password is Less than 8 Characters "));
@@ -256,21 +246,15 @@ public class EDD_Platform extends javax.swing.JFrame {
                     line = br.readLine();
                 }
             } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Could not open file", "Informaation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Could not open file", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Could not read file", "Informaation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Could not read file", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(EDD_Platform.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Could not read file", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
+            Result_Import ri = new Result_Import(cont_user, Errores);
+            ri.setVisible(true);
         }
-        
-        System.out.println("Usuarios Agregados: "+cont_user);
-        
-        for(Object user : Errores){
-           Errors E = (Errors)user;
-            System.out.println(E.getUser() + " "+E.getReason());
-        }
-            
     }//GEN-LAST:event_Load_UsersMouseClicked
 
 

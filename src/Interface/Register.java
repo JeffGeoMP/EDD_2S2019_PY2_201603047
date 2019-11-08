@@ -133,24 +133,22 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
-       if(!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()){
-           try {
-               JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
-               Users.Add(username.getText(), pass.getText());
-               Operations.add("He Joined EDD System", username.getText());
-               Login login = new Login(Users, Operations);
-               login.setVisible(true);
-               this.dispose();
-           } catch (NoSuchAlgorithmException ex) {
-               Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-           }
-             
-       }else{
+        if(!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()){
+            try {
+                JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
+                Users.Add(username.getText(), pass.getText());
+                Operations.add("He Joined EDD System", username.getText());
+                Login login = new Login(Users, Operations);
+                login.setVisible(true);
+                this.dispose();
+            }catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
             JOptionPane.showMessageDialog(null, "Please Check to Information", "Information", JOptionPane.ERROR_MESSAGE);
-       }
+        }
     }//GEN-LAST:event_checkActionPerformed
 
-        
     private void Load_Images(JLabel checkin){
         Image imglogin = new ImageIcon(getClass().getResource("../Images/checkin.png")).getImage();
         Image newimglogin = imglogin.getScaledInstance(checkin.getWidth(), checkin.getHeight(), Image.SCALE_SMOOTH);

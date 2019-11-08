@@ -21,7 +21,7 @@ public class Login extends javax.swing.JFrame {
     
     public Login(Hash_Table Users, Stack Operations) {
         initComponents();
-        Load_Images(Login);             //Load Imagenes for From
+        Load_Images(Login);             //Load Imagenes for JFrame
         this.Users = Users;             //Load Users
         this.Operations = Operations;   //Load Operations
     }
@@ -111,7 +111,6 @@ public class Login extends javax.swing.JFrame {
         if(Username.getText().isEmpty() && Password.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "The Fields is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
         }else{
-          Users.Print_Table();
             try {
                 if(Users.Search(Username.getText(), Password.getText())){
                     JOptionPane.showMessageDialog(null, "Welcome "+Username.getText()+" to EDD System","Information",JOptionPane.INFORMATION_MESSAGE);
@@ -130,12 +129,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void New_UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_New_UserMouseClicked
-      int Resp = JOptionPane.showConfirmDialog(null, "Do you Want to Create a new User","Information",JOptionPane.YES_NO_OPTION);
-      if(Resp == JOptionPane.YES_OPTION){
-          Register r = new Register(Users, Operations);
-          r.setVisible(true);
-          this.dispose();
-      }
+        int Resp = JOptionPane.showConfirmDialog(null, "Do you Want to Create a new User","Information",JOptionPane.YES_NO_OPTION);
+        if(Resp == JOptionPane.YES_OPTION){
+            Register r = new Register(Users, Operations);
+            r.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_New_UserMouseClicked
 
     private void Load_Images(JLabel login){

@@ -131,7 +131,7 @@
     <Component class="javax.swing.JLabel" name="Amodify">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel3"/>
-        <Property name="toolTipText" type="java.lang.String" value="Modifys a File"/>
+        <Property name="toolTipText" type="java.lang.String" value="Edit a File"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Fnew">
@@ -149,7 +149,7 @@
     <Component class="javax.swing.JLabel" name="Fmodify">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel6"/>
-        <Property name="toolTipText" type="java.lang.String" value="Modifys a Folder"/>
+        <Property name="toolTipText" type="java.lang.String" value="Edit a Folder"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Fup">
