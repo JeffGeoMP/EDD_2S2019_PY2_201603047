@@ -21,61 +21,61 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author JeffGeo
  */
 public class EDD_Platform extends javax.swing.JFrame {
+
     private Hash_Table Users;
     private Stack Operations;
     private String Current_User;
-    
+
     public EDD_Platform(String Username, Hash_Table Users, Stack Operations) {
         initComponents();
         this.Users = Users;
         this.Operations = Operations;
         this.Current_User = Username;
-        this.setTitle("EDD System -"+this.Current_User+"-");
+        this.setTitle("EDD System -" + this.Current_User + "-");
         this.Load_Images();
     }
-    
-    private void Load_Images(){
+
+    private void Load_Images() {
         Image imgexit = new ImageIcon(getClass().getResource("../Images/exit.png")).getImage();
         Image newimgexit = imgexit.getScaledInstance(exit.getWidth(), exit.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconexit = new ImageIcon(newimgexit);
         exit.setIcon(iconexit);
-        
+
         Image imganew = new ImageIcon(getClass().getResource("../Images/Acreate.png")).getImage();
         Image newimganew = imganew.getScaledInstance(Anew.getWidth(), Anew.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconanew = new ImageIcon(newimganew);
         Anew.setIcon(iconanew);
-        
+
         Image imgadelete = new ImageIcon(getClass().getResource("../Images/Adelete.png")).getImage();
         Image newimgadelete = imgadelete.getScaledInstance(Adelete.getWidth(), Adelete.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconadelete = new ImageIcon(newimgadelete);
         Adelete.setIcon(iconadelete);
-        
+
         Image imgamodify = new ImageIcon(getClass().getResource("../Images/Amodify.png")).getImage();
         Image newimgamodify = imgamodify.getScaledInstance(Amodify.getWidth(), Amodify.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconamodify = new ImageIcon(newimgamodify);
         Amodify.setIcon(iconamodify);
-        
+
         Image imgFnew = new ImageIcon(getClass().getResource("../Images/Fcreate.png")).getImage();
         Image newimgFnew = imgFnew.getScaledInstance(Fnew.getWidth(), Fnew.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFnew = new ImageIcon(newimgFnew);
         Fnew.setIcon(iconFnew);
-        
+
         Image imgFdelete = new ImageIcon(getClass().getResource("../Images/Fdelete.png")).getImage();
         Image newimgFdelete = imgFdelete.getScaledInstance(Fdelete.getWidth(), Fdelete.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFdelete = new ImageIcon(newimgFdelete);
         Fdelete.setIcon(iconFdelete);
-        
+
         Image imgFmodify = new ImageIcon(getClass().getResource("../Images/Fmodify.png")).getImage();
         Image newimgFmodify = imgFmodify.getScaledInstance(Fmodify.getWidth(), Fmodify.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFmodify = new ImageIcon(newimgFmodify);
         Fmodify.setIcon(iconFmodify);
-        
+
         Image imgFup = new ImageIcon(getClass().getResource("../Images/Fup.png")).getImage();
         Image newimgFup = imgFup.getScaledInstance(Fup.getWidth(), Fup.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFup = new ImageIcon(newimgFup);
         Fup.setIcon(iconFup);
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -208,7 +208,7 @@ public class EDD_Platform extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
-        Login Login = new Login(Users,Operations);
+        Login Login = new Login(Users, Operations);
         Login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_exitMouseClicked
@@ -218,28 +218,28 @@ public class EDD_Platform extends javax.swing.JFrame {
         ArrayList<Object> Errores = new ArrayList();
         JFileChooser file = new JFileChooser();
         file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        
+
         FileNameExtensionFilter Filter = new FileNameExtensionFilter("Files .CSV", "csv");
         file.setFileFilter(Filter);
-        
+
         int result = file.showOpenDialog(this);
-        if(result != JFileChooser.CANCEL_OPTION){
+        if (result != JFileChooser.CANCEL_OPTION) {
             File filename = file.getSelectedFile();
             try {
                 BufferedReader br = new BufferedReader(new FileReader(filename.getAbsoluteFile()));
                 String line = br.readLine();
-                while(null!=line){
+                while (null != line) {
                     String[] fields = line.split(",");
-                    if(!fields[0].equalsIgnoreCase("Usuario")  && !fields[1].equalsIgnoreCase("Password")){
-                        if(!Users.Validate_user(fields[0])){
-                            if(fields[1].length()>=8){
+                    if (!fields[0].equalsIgnoreCase("Usuario") && !fields[1].equalsIgnoreCase("Password")) {
+                        if (!Users.Validate_user(fields[0])) {
+                            if (fields[1].length() >= 8) {
                                 Users.Add(fields[0], fields[1]);
                                 Operations.add("Add User", Current_User);
                                 cont_user++;
-                            }else{
+                            } else {
                                 Errores.add(new Errors(fields[0], "The Password is Less than 8 Characters "));
                             }
-                        }else{
+                        } else {
                             Errores.add(new Errors(fields[0], "User Already Registered"));
                         }
                     }
