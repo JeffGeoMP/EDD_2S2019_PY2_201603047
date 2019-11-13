@@ -5,7 +5,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import Structures.Hash_Table;
+import Structures.Table_Hash;
 import Structures.Stack;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -16,10 +16,10 @@ import java.util.logging.Logger;
  */
 public class Login extends javax.swing.JFrame {
     
-    private Hash_Table Users;
+    private Table_Hash Users;
     private Stack Operations;
     
-    public Login(Hash_Table Users, Stack Operations) {
+    public Login(Table_Hash Users, Stack Operations) {
         initComponents();
         Load_Images(Login);             //Load Imagenes for JFrame
         this.Users = Users;             //Load Users

@@ -1,6 +1,6 @@
 package Interface;
 
-import Structures.Hash_Table;
+import Structures.Table_Hash;
 import Structures.Stack;
 import java.awt.Color;
 import java.awt.Image;
@@ -19,10 +19,10 @@ import javax.swing.event.DocumentListener;
  */
 public class Register extends javax.swing.JFrame {
     
-    private Hash_Table Users;
+    private Table_Hash Users;
     private Stack Operations;
     
-    public Register(Hash_Table Users, Stack Operations) {
+    public Register(Table_Hash Users, Stack Operations) {
         initComponents();          
         Load_Images(register);          //Load Imagenes for the from
         Listeners();                    //Add Listeners for the buttons

@@ -1,0 +1,17 @@
+digraph G {
+rankdir=TB
+node [shape = record, style=filled, fillcolor=seashell2]
+l[label="<C0>|Filename: l\n Content: CCC\n Balance Factor: 0\n Height: 2\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson|<C1>"]
+b[label="<C0>|Filename: b\n Content: CCC\n Balance Factor: 0\n Height: 1\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson|<C1>"]
+a[label="Filename: a\n Content: CCC\n Balance Factor: 0\n Height: 0\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson"]
+b:C0->a
+j[label="Filename: j\n Content: CCC\n Balance Factor: 0\n Height: 0\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson"]
+b:C1->j
+l:C0->b
+n[label="<C0>|Filename: n\n Content: CCC\n Balance Factor: 0\n Height: 1\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson|<C1>"]
+m[label="Filename: m\n Content: CCC\n Balance Factor: 0\n Height: 0\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson"]
+n:C0->m
+u[label="Filename: u\n Content: CCC\n Balance Factor: 0\n Height: 0\n TimeStamp: 13/11/2019 07:03:34\n Owner: Jefferson"]
+n:C1->u
+l:C1->n
+}

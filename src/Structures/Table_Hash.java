@@ -6,13 +6,13 @@ import java.util.Arrays;
  /*
  * @author JeffGeo
  */
-public class Hash_Table {
+public class Table_Hash {
     private Object[] Users;
     private int Size_Prime;
     private int Mod;
     private int Elements;
     
-        public Hash_Table() throws NoSuchAlgorithmException{
+        public Table_Hash() throws NoSuchAlgorithmException{
             Size_Prime = 7;
             Mod = Size_Prime-1;
             Elements = 0;

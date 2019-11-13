@@ -1,7 +1,7 @@
 package Interface;
 
 import Others.Errors;
-import Structures.Hash_Table;
+import Structures.Table_Hash;
 import Structures.Stack;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -22,17 +22,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class EDD_Platform extends javax.swing.JFrame {
 
-    private Hash_Table Users;
+    private Table_Hash Users;
     private Stack Operations;
     private String Current_User;
 
-    public EDD_Platform(String Username, Hash_Table Users, Stack Operations) {
+    public EDD_Platform(String Username, Table_Hash Users, Stack Operations) {
         initComponents();
         this.Users = Users;
         this.Operations = Operations;
         this.Current_User = Username;
         this.setTitle("EDD System -" + this.Current_User + "-");
         this.Load_Images();
+    }
+    
+    private void UpdateDirection(String new_direction){
+        Direction.setText(new_direction);
     }
 
     private void Load_Images() {
@@ -75,6 +79,33 @@ public class EDD_Platform extends javax.swing.JFrame {
         Image newimgFup = imgFup.getScaledInstance(Fup.getWidth(), Fup.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFup = new ImageIcon(newimgFup);
         Fup.setIcon(iconFup);
+        
+        
+        Image imgUserLoad = new ImageIcon(getClass().getResource("../Images/Users.png")).getImage();
+        Image newimgUserLoad = imgUserLoad.getScaledInstance(Load_Users.getWidth(), Load_Users.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconUserLoad = new ImageIcon(newimgUserLoad);
+        Load_Users.setIcon(iconUserLoad);
+        
+        Image imgFilesLoad = new ImageIcon(getClass().getResource("../Images/Aload.png")).getImage();
+        Image newimgFilesLoad = imgFilesLoad.getScaledInstance(Files_Load.getWidth(), Files_Load.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconFilesLoad = new ImageIcon(newimgFilesLoad);
+        Files_Load.setIcon(iconFilesLoad);
+        
+        Image imgShare = new ImageIcon(getClass().getResource("../Images/share.png")).getImage();
+        Image newimgShare = imgShare.getScaledInstance(Share.getWidth(), Share.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconShare = new ImageIcon(newimgShare);
+        Share.setIcon(iconShare);
+        
+        Image imgDownLoad = new ImageIcon(getClass().getResource("../Images/download.png")).getImage();
+        Image newimgDownload = imgDownLoad.getScaledInstance(Download.getWidth(), Download.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconDownload = new ImageIcon(newimgDownload);
+        Download.setIcon(iconDownload);
+        
+        Image imgReports = new ImageIcon(getClass().getResource("../Images/Reports.png")).getImage();
+        Image newimgReports = imgReports.getScaledInstance(Reports.getWidth(), Reports.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconReports = new ImageIcon(newimgReports);
+        Reports.setIcon(iconReports);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -92,10 +123,15 @@ public class EDD_Platform extends javax.swing.JFrame {
         Fup = new javax.swing.JLabel();
         exit = new javax.swing.JLabel();
         Load_Users = new javax.swing.JLabel();
+        Files_Load = new javax.swing.JLabel();
+        Share = new javax.swing.JLabel();
+        Download = new javax.swing.JLabel();
+        Reports = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("frame"); // NOI18N
 
+        Panel.setBackground(new java.awt.Color(255, 255, 255));
         Panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Files and Folders", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         javax.swing.GroupLayout PanelLayout = new javax.swing.GroupLayout(Panel);
@@ -141,9 +177,27 @@ public class EDD_Platform extends javax.swing.JFrame {
         });
 
         Load_Users.setText("jLabel1");
+        Load_Users.setToolTipText("Bulk Loading Users");
         Load_Users.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Load_UsersMouseClicked(evt);
+            }
+        });
+
+        Files_Load.setText("jLabel1");
+        Files_Load.setToolTipText("Bulk Loading Files");
+
+        Share.setText("jLabel2");
+        Share.setToolTipText("Share Files with Others Users");
+
+        Download.setText("jLabel3");
+        Download.setToolTipText("Download File");
+
+        Reports.setText("jLabel4");
+        Reports.setToolTipText("Reports of Structures");
+        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ReportsMouseClicked(evt);
             }
         });
 
@@ -165,6 +219,14 @@ public class EDD_Platform extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Load_Users, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Files_Load, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(Share, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Download, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(Reports, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Direction, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -174,13 +236,26 @@ public class EDD_Platform extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(Share, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(Files_Load, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Load_Users, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(Download, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Load_Users, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(Reports, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,18 +332,27 @@ public class EDD_Platform extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Load_UsersMouseClicked
 
+    private void ReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseClicked
+        Reports reports = new Reports(Users, Operations);
+        reports.setVisible(true);
+    }//GEN-LAST:event_ReportsMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Adelete;
     private javax.swing.JLabel Amodify;
     private javax.swing.JLabel Anew;
     private javax.swing.JLabel Direction;
+    private javax.swing.JLabel Download;
     private javax.swing.JLabel Fdelete;
+    private javax.swing.JLabel Files_Load;
     private javax.swing.JLabel Fmodify;
     private javax.swing.JLabel Fnew;
     private javax.swing.JLabel Fup;
     private javax.swing.JLabel Load_Users;
     private javax.swing.JPanel Panel;
+    private javax.swing.JLabel Reports;
+    private javax.swing.JLabel Share;
     private javax.swing.JLabel exit;
     // End of variables declaration//GEN-END:variables
 }

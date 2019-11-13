@@ -1,5 +1,9 @@
 package Structures;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,17 +15,22 @@ import java.util.Date;
 public class Stack {
 
     private Node head;
+    private Node end;
+//    public int print;
 
     public Stack() {
         this.head = null;
+        this.end = null;
+//        this.print = 0;
     }
 
     public void add(String Operation, String User) {
         Node new_operation = new Node(Operation, User);
         if (Isempty()) {
             this.head = new_operation;
+            this.end = new_operation;
         } else {
-            new_operation.linkednext(this.head);
+            new_operation.next = this.head;
             this.head = new_operation;
         }
     }
@@ -31,49 +40,88 @@ public class Stack {
             System.out.println("Not Found Operations in the System");
         } else {
             Node temp = this.head;
+
             while (temp != null) {
-                System.out.println("Date: " + temp.getDate() + " Hour: " + temp.getHour() + " Operation: " + temp.getOperation() + " User: " + temp.getUser());
-                temp = temp.getNext();
+                System.out.println("Date: " + temp.Date + " Hour: " + temp.Hour + " Operation: " + temp.Operation + " User: " + temp.Username);
+                temp = temp.next;
             }
+        }
+    }
+    
+    public void borraArchivo(String path){
+        File archivo = new File(path);
+        archivo.delete();
+    }
+
+    public void GenerateImage(int n) {
+        final String rutaDot = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+        String rutaImagen = "Stack"+n+".png";
+        String rutatxt = "src\\Files .DOT\\Stack.txt";
+        String parametroT = "-Tpng";
+        String parametroO = "-o";
+
+        FileWriter archivo = null;
+        PrintWriter pw = null;
+        
+        try {
+            archivo = new FileWriter(rutatxt);
+            pw = new PrintWriter(archivo);
+            pw.println("digraph G {");
+            pw.println("rankdir=LR");
+            pw.println("node [shape = record, style=filled, fillcolor=seashell2]");
+            pw.println("stack[label=\"");
+            
+            Node temp = this.head;
+            while (temp != null) {
+                if (temp.next != null) {
+                    pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation + " | ");
+                } else {
+                    pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation);
+                }
+                temp = temp.next;
+            }
+            pw.println("\"];");
+            pw.println("}");
+            archivo.close();
+
+            // Creates rutaImagen of Structure
+            try {
+                String[] cmd = new String[5];
+                cmd[0] = rutaDot;
+                cmd[1] = parametroT;
+                cmd[2] = rutatxt;
+                cmd[3] = parametroO;
+                cmd[4] = rutaImagen;
+
+                Runtime rt = Runtime.getRuntime();
+                rt.exec(cmd);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } catch (IOException e) {
+            System.err.println("ERROR en archivo: " + e.toString());
         }
     }
 
     private boolean Isempty() {
         return (null == this.head);
     }
-
 }
 
 class Node {
 
-    private String Operation;
-    private String User;
-    private String Hour;
-    private String Date;
-    private Node next;
+    public String Operation;
+    public String Username;
+    public String Hour;
+    public String Date;
+    public Node next;
 
     public Node(String Operation, String User) {
         this.Date = Date();
         this.Hour = Hour();
         this.Operation = Operation;
-        this.User = User;
+        this.Username = User;
         this.next = null;
-    }
-
-    public String getOperation() {
-        return Operation;
-    }
-
-    public String getUser() {
-        return User;
-    }
-
-    public String getHour() {
-        return Hour;
-    }
-
-    public String getDate() {
-        return Date;
     }
 
     private String Hour() {
@@ -86,13 +134,5 @@ class Node {
         Date date = new Date();
         DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
         return dateformat.format(date);
-    }
-
-    public void linkednext(Node n) {
-        this.next = n;
-    }
-
-    public Node getNext() {
-        return this.next;
     }
 }
