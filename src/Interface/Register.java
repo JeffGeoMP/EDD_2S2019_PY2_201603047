@@ -18,20 +18,20 @@ import javax.swing.event.DocumentListener;
  * @author JeffGeo
  */
 public class Register extends javax.swing.JFrame {
-    
+
     private Table_Hash Users;
     private Stack Operations;
-    
+
     public Register(Table_Hash Users, Stack Operations) {
-        initComponents();          
+        initComponents();
         Load_Images(register);          //Load Imagenes for the from
         Listeners();                    //Add Listeners for the buttons
-        check.setEnabled(false);        //Initializing the button check in false
+        AD(false);
+
         this.Users = Users;
         this.Operations = Operations;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -133,47 +133,53 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
-        if(!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()){
-            try {
-                JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
-                Users.Add(username.getText(), pass.getText());
-                Operations.add("He Joined EDD System", username.getText());
-                Login login = new Login(Users, Operations);
-                login.setVisible(true);
-                this.dispose();
-            }catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        if (!pass.getText().isEmpty() && !cpass.getText().isEmpty() && !username.getText().isEmpty()) {
+            if (pass.getText().equals(cpass.getText())) {
+                try {
+                    JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    Users.Add(username.getText(), pass.getText());
+                    //Operations.add("He Joined EDD System", username.getText());
+                    Login login = new Login(Users, Operations);
+                    login.setVisible(true);
+                    this.dispose();
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                Pass2V.setText("Passwords Do Not Match");
+                Pass2V.setForeground(Color.RED);
             }
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Please Check to Information", "Information", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_checkActionPerformed
 
-    private void Load_Images(JLabel checkin){
+    private void Load_Images(JLabel checkin) {
         Image imglogin = new ImageIcon(getClass().getResource("../Images/checkin.png")).getImage();
         Image newimglogin = imglogin.getScaledInstance(checkin.getWidth(), checkin.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimglogin);
         checkin.setIcon(icon);
     }
-    
-    private void Listeners(){
+
+    private void Listeners() {
         pass.getDocument().addDocumentListener(new DocumentListener() {
-           @Override
-           public void insertUpdate(DocumentEvent e) {
-               Pass();
-           }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                Pass();
+            }
 
-           @Override
-           public void removeUpdate(DocumentEvent e) {
-               Pass();
-           }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Pass();
+            }
 
-           @Override
-           public void changedUpdate(DocumentEvent e) {
-               Pass();
-           }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                Pass();
+            }
         });
-       
+
         cpass.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -190,8 +196,7 @@ public class Register extends javax.swing.JFrame {
                 CPass();
             }
         });
-        
-        
+
         username.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -209,55 +214,64 @@ public class Register extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void Pass(){
-        if(pass.getText().isEmpty()){
+
+    private void Pass() {
+        if (pass.getText().isEmpty()) {
             PassV.setText("Obligatory Field");
             PassV.setForeground(Color.RED);
             check.setEnabled(false);
-        }else{
-            if(pass.getText().length()<8){
-                PassV.setText("Invalid Password");
-                PassV.setForeground(Color.RED);
-                check.setEnabled(false);
-            }else{
-                PassV.setText("Valid Password");
-                PassV.setForeground(Color.BLUE);
-                check.setEnabled(true);
-            }
+
+        } else if (pass.getText().length() < 8) {
+            PassV.setText("Invalid Password");
+            PassV.setForeground(Color.RED);
+            check.setEnabled(false);
+
+        } else {
+            PassV.setText("Valid Password");
+            PassV.setForeground(Color.BLUE);
+            check.setEnabled(true);
         }
     }
-    
-    private void CPass(){
-        if(cpass.getText().equals(pass.getText())){
+
+    private void CPass() {
+        if (cpass.getText().isEmpty()) {
+            Pass2V.setText("Obligatory Field");
+            Pass2V.setForeground(Color.RED);
+
+        } else if (cpass.getText().equals(pass.getText())) {
             Pass2V.setText("Password Match");
             Pass2V.setForeground(Color.BLUE);
-            check.setEnabled(true);
-        }else{
+
+        } else {
             Pass2V.setText("Passwords Do Not Match");
             Pass2V.setForeground(Color.RED);
-            check.setEnabled(false);
+
         }
     }
-    
-    private void Username(){
-        if(username.getText().isEmpty()){
-           UserV.setText("Obligatory Field");
-           UserV.setForeground(Color.RED);
-           check.setEnabled(false);
-        }else{
-            if(Users.Validate_user(username.getText())){
-                UserV.setText("Username not Available");
-                UserV.setForeground(Color.RED);
-                check.setEnabled(false);
-            }else{
-                UserV.setText("Username Available");
-                UserV.setForeground(Color.BLUE);
-                check.setEnabled(true);
-            }
+
+    private void Username() {
+        if (username.getText().isEmpty()) {
+            UserV.setText("Obligatory Field");
+            UserV.setForeground(Color.RED);
+            AD(false);
+        } else if (Users.Validate_user(username.getText())) {
+            UserV.setText("Username not Available");
+            UserV.setForeground(Color.RED);
+            AD(false);
+        } else {
+            UserV.setText("Username Available");
+            UserV.setForeground(Color.BLUE);
+            AD(true);
         }
     }
-    
+
+    private void AD(boolean v) {
+        check.setEnabled(v);
+        pass.setEnabled(v);
+        cpass.setEnabled(v);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Pass2V;
     private javax.swing.JLabel PassV;

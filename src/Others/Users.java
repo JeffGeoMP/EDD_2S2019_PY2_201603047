@@ -20,6 +20,22 @@ public class Users {
             this.Hour = Hour();
             this.Date = Date();
         }
+
+    public String getHour() {
+        return Hour;
+    }
+
+    public void setHour(String Hour) {
+        this.Hour = Hour;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String Date) {
+        this.Date = Date;
+    }
         
         public Users(){
             this.User = "";

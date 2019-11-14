@@ -3,4 +3,5 @@ rankdir=LR
 node [shape = record, style=filled, fillcolor=seashell2]
 stack[label="
 "];
+aux [shape = plaintext, label="Operaciones: 0"]
 }

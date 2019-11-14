@@ -1,9 +1,19 @@
 package Structures;
 
 import Others.Files;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -38,8 +48,8 @@ public class AVLTree {
     //--------------------------------------------------------------------------
 
     //Using Interface ----------------------------------------------------------
-    public void add(String Filename, String Content, String Username) {
-        NodeAVL new_node = new NodeAVL(Filename, Content, Username);
+    public void add(String FilenameAbsolute, String Content, String Username) {
+        NodeAVL new_node = new NodeAVL(FilenameAbsolute, Content, Username);
         if (this.Root == null) {
             Root = new_node;
         } else {
@@ -52,15 +62,15 @@ public class AVLTree {
         System.out.println("File Eliminate " + Filename);
     }
 
-    public boolean Search(String Filename) {
-        return (searchAVL(this.Root, Filename) != null);
+    public boolean Search(String FilenameAbsolute) {
+        return (searchAVL(this.Root, FilenameAbsolute) != null);
     }
 
-    public void EditName(String Filename, String new_Filename) {
-        if (this.Search(Filename)) {
-            NodeAVL temp = searchAVL(this.Root, Filename);
-            NodeAVL aux = new NodeAVL(new_Filename, temp.File.getContent(), temp.File.getUsername(), temp.File.getDate(), temp.File.getHour());
-            Remove(Filename);
+    public void EditName(String FilenameAbsolute, String new_FilenameAbsolute) {
+        if (this.Search(FilenameAbsolute)) {
+            NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
+            NodeAVL aux = new NodeAVL(new_FilenameAbsolute, temp.File.getContent(), temp.File.getUsername(), temp.File.getDate(), temp.File.getHour());
+            Remove(FilenameAbsolute);
             if (this.Root == null) {
                 Root = aux;
             } else {
@@ -71,10 +81,10 @@ public class AVLTree {
         }
     }
 
-    public void EditContent(String Filename, String new_Content) {
-        if (this.Search(Filename)) {
-            NodeAVL temp = searchAVL(this.Root, Filename);
-            Root = removeAVL(Root, Filename);
+    public void EditContent(String FilenameAbsolute, String new_Content) {
+        if (this.Search(FilenameAbsolute)) {
+            NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
+            Root = removeAVL(Root, FilenameAbsolute);
             temp.File.setContent(new_Content);
             if (this.Root == null) {
                 Root = temp;
@@ -83,6 +93,48 @@ public class AVLTree {
             }
         } else {
             System.out.println("Not Found File");
+        }
+    }
+    
+    public void DeleteFile(String path){
+        File archivo = new File(path);
+        archivo.delete();
+    }
+
+    public void BulkLoad(JFrame frame, String Username) {
+        JFileChooser file = new JFileChooser();
+        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        FileNameExtensionFilter Filter = new FileNameExtensionFilter("Files .CSV", "csv");
+        file.setFileFilter(Filter);
+
+        int result = file.showOpenDialog(frame);
+        if (result != JFileChooser.CANCEL_OPTION) {
+            BufferedReader br = null;
+            try {
+                File filename = file.getSelectedFile();
+                br = new BufferedReader(new FileReader(filename.getAbsoluteFile()));
+                String line = br.readLine();
+                while (null != line) {
+                    String[] fields = line.split(",");
+                    if (!fields[0].equalsIgnoreCase("Archivo") && !fields[1].equalsIgnoreCase("Contenido")) {
+                        this.add(fields[0], this.removeqt(fields[1]), Username);
+                    }
+                    line = br.readLine();
+                }
+                br.close();
+
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Could not open file", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Could not open file", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Could not open file", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
     }
 
@@ -126,32 +178,33 @@ public class AVLTree {
     }
 
     //--------------------------------------------------------------------------
-    public String Code(NodeAVL n){
+    private String Code(NodeAVL n) {
         String values = "";
-        if(n.Left ==null && n.Right==null){
-            values += n.File.getFilename()+"[label=\"Filename: "+n.File.getFilename()+"\\n Content: "+n.File.getContent()+"\\n Balance Factor: "+Balance(n)+"\\n Height: "+n.Height+"\\n TimeStamp: "+n.File.getDate()+" "+n.File.getHour()+"\\n Owner: "+n.File.getUsername()+"\"]\n";
-        }else{
-            values += n.File.getFilename()+"[label=\"<C0>|Filename: "+n.File.getFilename()+"\\n Content: "+n.File.getContent()+"\\n Balance Factor: "+Balance(n)+"\\n Height: "+n.Height+"\\n TimeStamp: "+n.File.getDate()+" "+n.File.getHour()+"\\n Owner: "+n.File.getUsername()+"|<C1>\"]\n";
+        if (n.Left == null && n.Right == null) {
+            values += n.File.getFilename() + "[label=\"Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "\"]\n";
+        } else {
+            values += n.File.getFilename() + "[label=\"<C0>|Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "|<C1>\"]\n";
         }
-        if(n.Left!=null){
-            values += Code(n.Left) +n.File.getFilename()+":C0->"+n.Left.File.getFilename() + "\n";
+        if (n.Left != null) {
+            values += Code(n.Left) + n.File.getFilename() + ":C0->" + n.Left.File.getFilename() + "\n";
         }
-        if(n.Right!=null){
-            values += Code(n.Right) +n.File.getFilename()+":C1->"+n.Right.File.getFilename()+ "\n";
+        if (n.Right != null) {
+            values += Code(n.Right) + n.File.getFilename() + ":C1->" + n.Right.File.getFilename() + "\n";
         }
         return values;
     }
+
     //Operations in the AVL Tree -----------------------------------------------
     private NodeAVL addAVL(NodeAVL new_node, NodeAVL subtree) {
         NodeAVL sup = subtree;
-        int Comparation = new_node.File.getFilename().compareTo(subtree.File.getFilename());
+        int Comparation = new_node.File.getFilename().compareToIgnoreCase(subtree.File.getFilename());
         if (Comparation < 0) {
             if (subtree.Left == null) {
                 subtree.Left = new_node;
             } else {
                 subtree.Left = addAVL(new_node, subtree.Left);
                 if ((this.Height(subtree.Left) - this.Height(subtree.Right)) == 2) {
-                    int Comparation2 = Data(new_node).compareTo(subtree.Left.File.getFilename());
+                    int Comparation2 = Data(new_node).compareToIgnoreCase(subtree.Left.File.getFilename());
                     if (Comparation2 < 0) {
                         sup = RotationLeft(subtree);
                     } else {
@@ -165,7 +218,7 @@ public class AVLTree {
             } else {
                 subtree.Right = addAVL(new_node, subtree.Right);
                 if ((this.Height(subtree.Right) - this.Height(subtree.Left)) == 2) {
-                    int Comparation2 = new_node.File.getFilename().compareTo(subtree.Right.File.getFilename());
+                    int Comparation2 = new_node.File.getFilename().compareToIgnoreCase(subtree.Right.File.getFilename());
                     if (Comparation2 > 0) {
                         sup = RotationRight(subtree);
                     } else {
@@ -193,7 +246,7 @@ public class AVLTree {
             return null;
         } else if (root.File.getFilename().equals(Filename)) {
             return root;
-        } else if (root.File.getFilename().compareTo(Filename) < 0) {
+        } else if (root.File.getFilename().compareToIgnoreCase(Filename) < 0) {
             return searchAVL(root.Right, Filename);
         } else {
             return searchAVL(root.Left, Filename);
@@ -204,7 +257,7 @@ public class AVLTree {
         if (n == null) {
             return null;
         }
-        int Comparation = key.compareTo(n.File.getFilename());
+        int Comparation = key.compareToIgnoreCase(n.File.getFilename());
         if (Comparation < 0) {
             n.Left = removeAVL(n.Left, key);
         } else if (Comparation > 0) {
@@ -283,6 +336,17 @@ public class AVLTree {
         f = (Files) n.File;
         return f.getFilename();
     }
+    
+    private String removeqt(String s){
+        String new_s= "";
+        for(int i = 0; i<s.length();i++){
+            char car = s.charAt(i);
+            if(car != 34){
+                new_s+=car;
+            }
+        }
+        return new_s;
+    }
     //--------------------------------------------------------------------------
 
     //Orders for print the AVL Tree ---------------------------------------------
@@ -296,7 +360,7 @@ public class AVLTree {
 
 //    public void PreOrden(NodeAVL n) {
 //        if (n != null) {
-//            System.out.print(n.Key + ",");
+//            System.removeqt.print(n.Key + ",");
 //            PreOrden(n.Left);
 //            PreOrden(n.Right);
 //        }
@@ -306,7 +370,7 @@ public class AVLTree {
 //        if (n != null) {
 //            PostOrden(n.Left);
 //            PostOrden(n.Right);
-//            System.out.print(n.Key + ",");
+//            System.removeqt.print(n.Key + ",");
 //        }
 //    }
     //--------------------------------------------------------------------------

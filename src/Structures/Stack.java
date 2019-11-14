@@ -15,12 +15,12 @@ import java.util.Date;
 public class Stack {
 
     private Node head;
-    private Node end;
+    private int count;
 //    public int print;
 
     public Stack() {
         this.head = null;
-        this.end = null;
+        this.count = 0;
 //        this.print = 0;
     }
 
@@ -28,10 +28,11 @@ public class Stack {
         Node new_operation = new Node(Operation, User);
         if (Isempty()) {
             this.head = new_operation;
-            this.end = new_operation;
+            this.count++;
         } else {
             new_operation.next = this.head;
             this.head = new_operation;
+            this.count++;
         }
     }
 
@@ -48,7 +49,7 @@ public class Stack {
         }
     }
     
-    public void borraArchivo(String path){
+    public void DeleteFile(String path){
         File archivo = new File(path);
         archivo.delete();
     }
@@ -81,6 +82,7 @@ public class Stack {
                 temp = temp.next;
             }
             pw.println("\"];");
+            pw.println("aux [shape = plaintext, label=\"Operaciones: "+this.count+"\"]");
             pw.println("}");
             archivo.close();
 
