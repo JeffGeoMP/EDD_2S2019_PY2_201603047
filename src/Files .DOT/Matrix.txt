@@ -1,0 +1,105 @@
+digraph G {
+rankdir = TB;
+node [shape = rectangle, style=filled, fillcolor=seashell2];
+graph [nodesep = 0.5, splines=ortho];
+FRoot [label="Root"]
+FRootMusica [label="Musica"]
+FRootVideos [label="Videos"]
+FRootPeliculas [label="Peliculas"]
+FRootImagenes [label="Imagenes"]
+FRootDocumentos [label="Documentos"]
+FRootMusicaRap [label="Rap"]
+FRootMusicaCumbias [label="Cumbias"]
+FRootMusicaReggae [label="Reggae"]
+FRootMusicaSalsa [label="Salsa"]
+FRootMusicaReggaeVol1 [label="Vol1"]
+FRootMusicaReggaeVol2 [label="Vol2"]
+FRootMusicaReggaeVol3 [label="Vol3"]
+FRootMusicaReggaeBobMarley [label="BobMarley"]
+Matrix->FRoot
+FRoot -> FRootMusica
+FRootMusica -> FRootVideos
+FRootVideos -> FRootPeliculas
+FRootPeliculas -> FRootImagenes
+FRootImagenes -> FRootDocumentos
+FRootDocumentos -> FRootMusicaRap
+FRootMusicaRap -> FRootMusicaCumbias
+FRootMusicaCumbias -> FRootMusicaReggae
+FRootMusicaReggae -> FRootMusicaSalsa
+FRootMusicaSalsa -> FRootMusicaReggaeVol1
+FRootMusicaReggaeVol1 -> FRootMusicaReggaeVol2
+FRootMusicaReggaeVol2 -> FRootMusicaReggaeVol3
+FRootMusicaReggaeVol3 -> FRootMusicaReggaeBobMarley
+CRoot [label="Root"]
+CRootMusica [label="Musica"]
+CRootVideos [label="Videos"]
+CRootPeliculas [label="Peliculas"]
+CRootImagenes [label="Imagenes"]
+CRootDocumentos [label="Documentos"]
+CRootMusicaRap [label="Rap"]
+CRootMusicaCumbias [label="Cumbias"]
+CRootMusicaReggae [label="Reggae"]
+CRootMusicaSalsa [label="Salsa"]
+CRootMusicaReggaeVol1 [label="Vol1"]
+CRootMusicaReggaeVol2 [label="Vol2"]
+CRootMusicaReggaeVol3 [label="Vol3"]
+CRootMusicaReggaeBobMarley [label="BobMarley"]
+Matrix->CRoot
+CRoot -> CRootMusica
+CRootMusica -> CRootVideos
+CRootVideos -> CRootPeliculas
+CRootPeliculas -> CRootImagenes
+CRootImagenes -> CRootDocumentos
+CRootDocumentos -> CRootMusicaRap
+CRootMusicaRap -> CRootMusicaCumbias
+CRootMusicaCumbias -> CRootMusicaReggae
+CRootMusicaReggae -> CRootMusicaSalsa
+CRootMusicaSalsa -> CRootMusicaReggaeVol1
+CRootMusicaReggaeVol1 -> CRootMusicaReggaeVol2
+CRootMusicaReggaeVol2 -> CRootMusicaReggaeVol3
+CRootMusicaReggaeVol3 -> CRootMusicaReggaeBobMarley
+Root [label ="Root/"]
+Musica [label ="Root/Musica/"]
+Videos [label ="Root/Videos/"]
+Peliculas [label ="Root/Peliculas/"]
+Imagenes [label ="Root/Imagenes/"]
+Documentos [label ="Root/Documentos/"]
+Rap [label ="Root/Musica/Rap/"]
+Cumbias [label ="Root/Musica/Cumbias/"]
+Reggae [label ="Root/Musica/Reggae/"]
+Salsa [label ="Root/Musica/Salsa/"]
+Vol1 [label ="Root/Musica/Reggae/Vol1/"]
+Vol2 [label ="Root/Musica/Reggae/Vol2/"]
+Vol3 [label ="Root/Musica/Reggae/Vol3/"]
+BobMarley [label ="Root/Musica/Reggae/BobMarley/"]
+Musica -> Videos
+Videos -> Peliculas
+Peliculas -> Imagenes
+Imagenes -> Documentos
+Rap -> Cumbias
+Cumbias -> Reggae
+Reggae -> Salsa
+Vol1 -> Vol2
+Vol2 -> Vol3
+Vol3 -> BobMarley
+FRoot -> Musica[constraint = false]
+FRootMusica -> Rap[constraint = false]
+FRootMusicaReggae -> Vol1[constraint = false]
+{rank=same; FRoot Musica Videos Peliculas Imagenes Documentos }
+{rank=same; FRootMusica Rap Cumbias Reggae Salsa }
+{rank=same; FRootMusicaReggae Vol1 Vol2 Vol3 BobMarley }
+CRootMusica->Musica
+CRootVideos->Videos
+CRootPeliculas->Peliculas
+CRootImagenes->Imagenes
+CRootDocumentos->Documentos
+CRootMusicaRap->Rap
+CRootMusicaCumbias->Cumbias
+CRootMusicaReggae->Reggae
+CRootMusicaSalsa->Salsa
+CRootMusicaReggaeVol1->Vol1
+CRootMusicaReggaeVol2->Vol2
+CRootMusicaReggaeVol3->Vol3
+CRootMusicaReggaeBobMarley->BobMarley
+{rank=same; Matrix  CRoot CRootMusica CRootVideos CRootPeliculas CRootImagenes CRootDocumentos CRootMusicaRap CRootMusicaCumbias CRootMusicaReggae CRootMusicaSalsa CRootMusicaReggaeVol1 CRootMusicaReggaeVol2 CRootMusicaReggaeVol3 CRootMusicaReggaeBobMarley}
+}

@@ -9,15 +9,25 @@ import java.util.Date;
  *
  * @author JeffGeo
  */
-public class Folders {
+public class Folder {
     private String FolderName;
+    private String FolderPath;
     private String Hour;
     private String Date;
 
-    public Folders(String FolderName) {
+    public Folder(String FolderName, String FolderPath) {
         this.FolderName = FolderName;
+        this.FolderPath = FolderPath;
         this.Hour = Hour();
         this.Date = Date();
+    }
+    
+    public String getFolderPath() {
+        return FolderPath;
+    }
+
+    public void setFolderPath(String FolderPath) {
+        this.FolderPath = FolderPath;
     }
 
     public String getFolderName() {

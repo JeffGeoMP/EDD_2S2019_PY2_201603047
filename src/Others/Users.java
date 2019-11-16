@@ -1,5 +1,6 @@
 package Others;
 
+import Structures.LinkedList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,12 +14,14 @@ public class Users {
     private String Pass;
     private String Hour;
     private String Date;
+    public LinkedList Graph;
     
         public Users(String user, String pass){
             this.User = user;
             this.Pass = pass;
             this.Hour = Hour();
             this.Date = Date();
+            this.Graph = new LinkedList();
         }
 
     public String getHour() {

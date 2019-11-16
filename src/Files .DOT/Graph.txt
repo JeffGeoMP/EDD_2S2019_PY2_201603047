@@ -1,0 +1,31 @@
+digraph G {
+graph [layout = circo]
+node [shape = circle, style=filled, fillcolor=seashell2]
+Root [label= "Root\n Directories: 5"]
+RootMusica [label= "Musica\n Directories: 4"]
+RootVideos [label= "Videos\n Directories: 0"]
+RootPeliculas [label= "Peliculas\n Directories: 0"]
+RootImagenes [label= "Imagenes\n Directories: 0"]
+RootDocumentos [label= "Documentos\n Directories: 0"]
+RootMusicaRap [label= "Rap\n Directories: 0"]
+RootMusicaCumbias [label= "Cumbias\n Directories: 0"]
+RootMusicaReggae [label= "Reggae\n Directories: 4"]
+RootMusicaSalsa [label= "Salsa\n Directories: 0"]
+RootMusicaReggaeVol1 [label= "Vol1\n Directories: 0"]
+RootMusicaReggaeVol2 [label= "Vol2\n Directories: 0"]
+RootMusicaReggaeVol3 [label= "Vol3\n Directories: 0"]
+RootMusicaReggaeBobMarley [label= "BobMarley\n Directories: 0"]
+Root->RootMusica
+Root->RootVideos
+Root->RootPeliculas
+Root->RootImagenes
+Root->RootDocumentos
+RootMusica->RootMusicaRap
+RootMusica->RootMusicaCumbias
+RootMusica->RootMusicaReggae
+RootMusica->RootMusicaSalsa
+RootMusicaReggae->RootMusicaReggaeVol1
+RootMusicaReggae->RootMusicaReggaeVol2
+RootMusicaReggae->RootMusicaReggaeVol3
+RootMusicaReggae->RootMusicaReggaeBobMarley
+}
