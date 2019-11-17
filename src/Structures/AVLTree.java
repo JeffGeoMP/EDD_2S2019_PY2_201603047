@@ -1,6 +1,8 @@
 package Structures;
 
 import Others.Files;
+import java.awt.Color;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +12,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -58,24 +65,29 @@ public class AVLTree {
     }
 
     public void Remove(String Filename) {
+        if(Search(Filename)){
+            System.out.println("Encontrado y Eliminado");
+        }
         Root = removeAVL(Root, Filename);
-        System.out.println("File Eliminate " + Filename);
     }
+
 
     public boolean Search(String FilenameAbsolute) {
         return (searchAVL(this.Root, FilenameAbsolute) != null);
     }
-
-    public void EditName(String FilenameAbsolute, String new_FilenameAbsolute) {
-        if (this.Search(FilenameAbsolute)) {
-            NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
+    
+    
+    public void EditName(String Filename, String new_FilenameAbsolute) {
+        if (this.Search(Filename)) {
+            NodeAVL temp = searchAVL(this.Root, Filename);
             NodeAVL aux = new NodeAVL(new_FilenameAbsolute, temp.File.getContent(), temp.File.getUsername(), temp.File.getDate(), temp.File.getHour());
-            Remove(FilenameAbsolute);
+            Remove(Filename);
             if (this.Root == null) {
                 Root = aux;
             } else {
                 Root = addAVL(aux, Root);
             }
+            this.InOrden(this.Root);
         } else {
             System.out.println("Not Found File");
         }
@@ -96,15 +108,56 @@ public class AVLTree {
         }
     }
     
-    public void DeleteFile(String path){
+    public String getContent(String Filename){
+        NodeAVL temp = searchAVL(this.Root, Filename);
+        String Content = "";
+        if(temp!=null){
+           Content = temp.File.getContent();
+        }
+        return Content;
+    }
+
+    public void AddGraphics(NodeAVL n, int x, JPanel panel, int Panel_Height, int width, int height, int Line_Folders, MouseListener e, int aux) {
+        String Noes = Nodes(this.Root);
+        String New_Line = "";
+        for (int i = 0; i < Noes.length(); i++) {
+            if (Noes.charAt(i) != '\n') {
+                New_Line += Noes.charAt(i);
+            } else {
+                //Fields[0] = FilenameAbsolute
+                //Fields[1] = Filename;
+                String[] Fields = New_Line.split(",");
+                JLabel File = new JLabel();
+                File.setName(Fields[1]);
+                File.setText(Fields[0]);
+                if (x != 0 && x % 9 == 0) {
+                    Line_Folders++;
+                    Panel_Height = Line_Folders * height + 20;
+                }
+                aux = x - 9 * (Line_Folders);
+                File.setBounds(aux * width + 15, Panel_Height, width, height);
+                Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+                File.setBorder(border);
+                File.addMouseListener(e);
+                panel.add(File);
+                x++;
+
+                New_Line = "";
+            }
+        }
+    }
+
+    public void DeleteFile(String path) {
         File archivo = new File(path);
         archivo.delete();
     }
 
     public void BulkLoad(JFrame frame, String Username) {
+        boolean VerFile = false;
+        
         JFileChooser file = new JFileChooser();
         file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
+        
         FileNameExtensionFilter Filter = new FileNameExtensionFilter("Files .CSV", "csv");
         file.setFileFilter(Filter);
 
@@ -117,7 +170,10 @@ public class AVLTree {
                 String line = br.readLine();
                 while (null != line) {
                     String[] fields = line.split(",");
-                    if (!fields[0].equalsIgnoreCase("Archivo") && !fields[1].equalsIgnoreCase("Contenido")) {
+                    if(fields[0].equalsIgnoreCase("Archivo") && fields[1].equalsIgnoreCase("Contenido")){
+                        VerFile = true;
+                    }
+                    if (!fields[0].equalsIgnoreCase("Archivo") && !fields[1].equalsIgnoreCase("Contenido") && VerFile==true) {
                         this.add(fields[0], this.removeqt(fields[1]), Username);
                     }
                     line = br.readLine();
@@ -154,7 +210,11 @@ public class AVLTree {
             pw.println("digraph G {");
             pw.println("rankdir=TB");
             pw.println("node [shape = record, style=filled, fillcolor=seashell2]");
-            pw.print(Code(Root));
+            if(Root!=null){
+                pw.print(Code(Root));
+            }else{
+                pw.print("node0[label=\"Not Found Files\"];");
+            }
             pw.println("}");
             archivo.close();
 
@@ -190,6 +250,25 @@ public class AVLTree {
         }
         if (n.Right != null) {
             values += Code(n.Right) + n.File.getFilename() + ":C1->" + n.Right.File.getFilename() + "\n";
+        }
+        return values;
+    }
+
+    private String Nodes(NodeAVL n) {
+        String values = "";
+
+        if (n.Left == null && n.Right == null) {
+            values += n.File.getFilenameAbsoulte() + "," + n.File.getFilename() + "\n";
+        } else {
+            values += n.File.getFilenameAbsoulte() + "," + n.File.getFilename() + "\n";
+        }
+        if (n.Left != null) {
+            //values += Nodes(n.Left) + "";
+            values += Nodes(n.Left);
+        }
+        if (n.Right != null) {
+            // values += Nodes(n.Right) + "";
+            values += Nodes(n.Right);
         }
         return values;
     }
@@ -336,13 +415,13 @@ public class AVLTree {
         f = (Files) n.File;
         return f.getFilename();
     }
-    
-    private String removeqt(String s){
-        String new_s= "";
-        for(int i = 0; i<s.length();i++){
+
+    public String removeqt(String s) {
+        String new_s = "";
+        for (int i = 0; i < s.length(); i++) {
             char car = s.charAt(i);
-            if(car != 34){
-                new_s+=car;
+            if (car != 34) {
+                new_s += car;
             }
         }
         return new_s;

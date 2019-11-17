@@ -18,12 +18,14 @@ public class Login extends javax.swing.JFrame {
     
     private Table_Hash Users;
     private Stack Operations;
+    private int UserIndex;
     
     public Login(Table_Hash Users, Stack Operations) {
         initComponents();
         Load_Images(Login);             //Load Imagenes for JFrame
         this.Users = Users;             //Load Users
         this.Operations = Operations;   //Load Operations
+        this.UserIndex = -1;            //Index Users
     }
 
     @SuppressWarnings("unchecked")
@@ -114,7 +116,8 @@ public class Login extends javax.swing.JFrame {
             try {
                 if(Users.Search(Username.getText(), Password.getText())){
                     JOptionPane.showMessageDialog(null, "Welcome "+Username.getText()+" to EDD System","Information",JOptionPane.INFORMATION_MESSAGE);
-                    EDD_Platform System = new EDD_Platform(Username.getText(), Users, Operations);
+                    UserIndex = Users.IndexUser(Username.getText());
+                    EDD_Platform System = new EDD_Platform(Username.getText(), UserIndex, Users, Operations);
                     System.setVisible(true);
                     this.dispose();
                 }else{

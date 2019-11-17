@@ -1,5 +1,7 @@
 package Interface;
 
+import Structures.AVLTree;
+import Structures.LinkedList;
 import Structures.Stack;
 import Structures.Table_Hash;
 import java.awt.Color;
@@ -19,21 +21,28 @@ public class Reports extends javax.swing.JFrame {
 
     private Table_Hash Users;
     private Stack Operations;
+    private AVLTree Folder;
+    private LinkedList Graphe;
     private int conStack = 0;
     private int conHash = 0;
+    private int conFolder = 0;
+    private int conGraph = 0;
+    private int conMatrix = 0;
 
-    public Reports(Table_Hash Users, Stack Operations) {
+    public Reports(Table_Hash Users, Stack Operations, AVLTree Folder, LinkedList Graphe) {
         initComponents();
 
         this.Users = Users;
         this.Operations = Operations;
+        this.Folder = Folder;
+        this.Graphe = Graphe;
 
         GroupRadioButton();
         image.setOpaque(true);                        //Quit designed for default
         image.setBackground(Color.white);             //pint Jlabel
         image.repaint();
         inf.setText("Select Report to Generate Image");
-        
+
         LoadImages();
     }
 
@@ -52,6 +61,7 @@ public class Reports extends javax.swing.JFrame {
         Matrix = new javax.swing.JRadioButton();
         ver = new javax.swing.JLabel();
         inf = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reports");
@@ -82,6 +92,13 @@ public class Reports extends javax.swing.JFrame {
 
         inf.setText("jLabel1");
 
+        jButton1.setText("Open ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,8 +114,11 @@ public class Reports extends javax.swing.JFrame {
                             .addComponent(Table_Hash)
                             .addComponent(TreeAVL)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(ver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)
+                        .addComponent(ver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +145,9 @@ public class Reports extends javax.swing.JFrame {
                 .addComponent(Matrix)
                 .addGap(18, 18, 18)
                 .addComponent(ver, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,38 +166,99 @@ public class Reports extends javax.swing.JFrame {
     private void verMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verMouseClicked
         Valitation();
     }//GEN-LAST:event_verMouseClicked
-    
-    private void LoadImages(){
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (TreeAVL.isSelected()) {
+            System.out.println("Existe");
+            image.setIcon(new ImageIcon("AVLTree" + this.conFolder + ".png"));
+            image.repaint();
+            Folder.DeleteFile("AVLTree" + this.conFolder + ".png");
+            inf.setText("Showing Image of the Structure AVLTree");
+
+        } else if (Table_Hash.isSelected()) {
+
+            System.out.println("Existe");
+            image.setIcon(new ImageIcon("Hash" + this.conHash + ".png"));
+            image.repaint();
+            Users.DeleteFile("Hash" + this.conHash + ".png");
+            inf.setText("Showing Image of the Structure Table Hash");
+
+        } else if (Stack.isSelected()) {
+            image.setIcon(new ImageIcon("Stack" + this.conStack + ".png"));
+            image.repaint();
+            Operations.DeleteFile("Stack" + this.conStack + ".png");
+            inf.setText("Showing Image of the Structure Stack");
+
+        } else if (Matrix.isSelected()) {
+            image.setIcon(new ImageIcon("Matrix" + this.conMatrix + ".png"));
+            image.repaint();
+            Graphe.DeleteFile("Matrix" + this.conMatrix + ".png");
+            inf.setText("Showing Image of the Structure Matrix");
+
+        } else if (Graph.isSelected()) {
+            image.setIcon(new ImageIcon("Graph" + this.conGraph + ".png"));
+            image.repaint();
+            Graphe.DeleteFile("Hash" + this.conGraph + ".png");
+            inf.setText("Showing Image of the Structure Graph");
+
+        } else {
+            inf.setText("Not Process Image");
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void LoadImages() {
         Image img = new ImageIcon(getClass().getResource("../Images/ojo.png")).getImage();
         Image newimg = img.getScaledInstance(ver.getWidth(), ver.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimg);
         ver.setIcon(icon);
     }
-    
-    
+
     private void Valitation() {
         if (TreeAVL.isSelected()) {
-            inf.setText("Successfully Generated Image");
-            
-            
-
-        } else if (Table_Hash.isSelected()) {
             inf.setText("The Image is Being Processed....");
-            this.conHash = (int)(Math.random()*1000000+1);
-            Users.GenerateImage(this.conHash);
-            
+            this.conFolder = (int) (Math.random() * 1000000 + 1);
+            Folder.GenerateImage(this.conFolder);
+
             //Verify if image is in url
-            File temp = new File("Hash" + this.conHash + ".png");
+            File temp = new File("AVLTree" + this.conFolder + ".png");
             while (!temp.exists()) {
-                    inf.setText("Loading image please wait....");
+                inf.setText("Loading image please wait....");
                 try {
-                    Thread.sleep(1000);               
+                    Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     JOptionPane.showMessageDialog(null, "Continue Please...", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
             inf.setText("Successfully Generated Image");
-            
+
+            if (temp.exists()) {
+                System.out.println("Existe");
+                image.setIcon(new ImageIcon("AVLTree" + this.conFolder + ".png"));
+                image.repaint();
+                Folder.DeleteFile("AVLTree" + this.conFolder + ".png");
+            } else {
+                JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            inf.setText("Showing Image of the Structure AVLTree");
+
+        } else if (Table_Hash.isSelected()) {
+            inf.setText("The Image is Being Processed....");
+            this.conHash = (int) (Math.random() * 1000000 + 1);
+            Users.GenerateImage(this.conHash);
+
+            //Verify if image is in url
+            File temp = new File("Hash" + this.conHash + ".png");
+            while (!temp.exists()) {
+                inf.setText("Loading image please wait....");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, "Continue Please...", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            inf.setText("Successfully Generated Image");
+
             if (temp.exists()) {
                 System.out.println("Existe");
                 image.setIcon(new ImageIcon("Hash" + this.conHash + ".png"));
@@ -185,22 +268,22 @@ public class Reports extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
             inf.setText("Showing Image of the Structure Table Hash");
-            
+
         } else if (Stack.isSelected()) {
             inf.setText("The Image is Being Processed....");
-            this.conStack = (int)(Math.random()*1000000+1);
+            this.conStack = (int) (Math.random() * 1000000 + 1);
             Operations.GenerateImage(this.conStack);
-            
+
             File temp = new File("Stack" + this.conStack + ".png"); //Verify if image is in url
             while (!temp.exists()) {
                 try {
-                    Thread.sleep(1000);               
+                    Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     JOptionPane.showMessageDialog(null, "Continue Please...", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
             inf.setText("Successfully Generated Image");
-            
+
             if (temp.exists()) {
                 image.setIcon(new ImageIcon("Stack" + this.conStack + ".png"));
                 image.repaint();
@@ -212,11 +295,56 @@ public class Reports extends javax.swing.JFrame {
 
         } else if (Matrix.isSelected()) {
             inf.setText("The Image is Being Processed....");
+            this.conMatrix = (int) (Math.random() * 1000000 + 1);
+            Graphe.GenerateImageMatrix(this.conMatrix);
+
+            //Verify if image is in url
+            File temp = new File("Matrix" + this.conMatrix + ".png");
+            while (!temp.exists()) {
+                inf.setText("Loading image please wait....");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, "Continue Please...", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
             inf.setText("Successfully Generated Image");
-            
+
+            if (temp.exists()) {
+                image.setIcon(new ImageIcon("Matrix" + this.conMatrix + ".png"));
+                image.repaint();
+                Graphe.DeleteFile("Matrix" + this.conMatrix + ".png");
+            } else {
+                JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            inf.setText("Showing Image of the Structure Matrix");
+
         } else if (Graph.isSelected()) {
             inf.setText("The Image is Being Processed....");
+            this.conGraph = (int) (Math.random() * 1000000 + 1);
+            Graphe.GenerateImage(this.conGraph);
+
+            //Verify if image is in url
+            File temp = new File("Graph" + this.conGraph + ".png");
+            while (!temp.exists()) {
+                inf.setText("Loading image please wait....");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, "Continue Please...", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
             inf.setText("Successfully Generated Image");
+
+            if (temp.exists()) {
+                image.setIcon(new ImageIcon("Graph" + this.conGraph + ".png"));
+                image.repaint();
+                Graphe.DeleteFile("Hash" + this.conGraph + ".png");
+            } else {
+                JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            inf.setText("Showing Image of the Structure Graph");
+
         } else {
             inf.setText("Not Process Image");
         }
@@ -257,7 +385,6 @@ public class Reports extends javax.swing.JFrame {
 //            inf.setText("Not Select Image");
 //        }
 //    }
-
     private void GroupRadioButton() {
         Group.add(Table_Hash);
         Group.add(Matrix);
@@ -275,6 +402,7 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JRadioButton TreeAVL;
     private javax.swing.JLabel image;
     private javax.swing.JLabel inf;
+    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JScrollPane panel;
     private javax.swing.JLabel ver;

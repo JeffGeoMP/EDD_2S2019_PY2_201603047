@@ -25,15 +25,7 @@ public class Main {
        
 //       
 
-//        AVLTree avl = new AVLTree();
-//        avl.add("a", "CCC", "Jefferson");
-//        avl.add("b", "CCC", "Jefferson");
-//        avl.add("j", "CCC", "Jefferson");
-//        avl.add("l", "CCC", "Jefferson");
-//        avl.add("m", "CCC", "Jefferson");
-//        avl.add("u", "CCC", "Jefferson");
-//        avl.add("n", "CCC", "Jefferson");
-//        avl.InOrden(avl.Root);
+
 //       
 //        //avl.GenerateImage(1);
 //        avl.GenerateImage(1);
@@ -42,7 +34,9 @@ public class Main {
 //        current_path = Graph.Head.Folders.getFolderPath();    // path Initial
 //        System.out.println(current_path);
 
-        //Carpeta Root
+//        LinkedList Graph = new LinkedList("Root");
+//        String current_path = "Root/";
+////        Carpeta Root
 //        Graph.add("Musica", current_path);
 //        Graph.add("Videos", current_path);
 //          Graph.add("Peliculas", current_path);
@@ -62,7 +56,7 @@ public class Main {
 //               
 //        Graph.add("BobMarley", current_path+"Musica/Reggae/");
 //                       Graph.print();
-//        //Graph.GenerateImage(23);
+//        Graph.GenerateImage(23);
 //        Graph.GenerateImageMatrix(755);
 
         

@@ -1,43 +1,5 @@
 digraph G {
 rankdir=TB
 node [shape = record, style=filled, fillcolor=seashell2]
-Justificaciondocx[label="<C0>|Filename: Justificacion.docx\n Content: Hola Buen dia..\n Balance Factor: 0\n Height: 4\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-Hellodocx[label="<C0>|Filename: Hello.docx\n Content: Hola Perro\n Balance Factor: -1\n Height: 3\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-Cjpg[label="<C0>|Filename: C.jpg\n Content: Archivo irrelevante\n Balance Factor: 0\n Height: 2\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-batsexe[label="<C0>|Filename: bats.exe\n Content: Ejecutable\n Balance Factor: 0\n Height: 1\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-ArquiDocdocx[label="Filename: ArquiDoc.docx\n Content: El Modulo\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-batsexe:C0->ArquiDocdocx
-Calculadorajs[label="Filename: Calculadora.js\n Content: script javascript\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-batsexe:C1->Calculadorajs
-Cjpg:C0->batsexe
-gameexe[label="<C0>|Filename: game.exe\n Content: juego perron\n Balance Factor: 0\n Height: 1\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-escuelavacaspdf[label="Filename: escuelavacas.pdf\n Content: cursos\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-gameexe:C0->escuelavacaspdf
-headerh[label="Filename: header.h\n Content: enlace para practica.cpp\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-gameexe:C1->headerh
-Cjpg:C1->gameexe
-Hellodocx:C0->Cjpg
-IPC2js[label="<C0>|Filename: IPC2.js\n Content: script\n Balance Factor: 0\n Height: 1\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-horarioxlsx[label="Filename: horario.xlsx\n Content: archivo\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-IPC2js:C0->horarioxlsx
-Juegoexe[label="Filename: Juego.exe\n Content: Archivo Ejecutable\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-IPC2js:C1->Juegoexe
-Hellodocx:C1->IPC2js
-Justificaciondocx:C0->Hellodocx
-Notasxlsx[label="<C0>|Filename: Notas.xlsx\n Content: 32-45-56\n Balance Factor: -1\n Height: 3\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-Manualdocx[label="<C0>|Filename: Manual.docx\n Content: Te la creiste we\n Balance Factor: -1\n Height: 2\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-linuxdocx[label="<C0>|Filename: linux.docx\n Content: Super su\n Balance Factor: 1\n Height: 1\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-Mainpy[label="Filename: Main.py\n Content: Holaperro\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-linuxdocx:C1->Mainpy
-Manualdocx:C0->linuxdocx
-Manualtecnico[label="Filename: Manualtecnico\n Content: La aplicaciones�\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-Manualdocx:C1->Manualtecnico
-Notasxlsx:C0->Manualdocx
-practicacpp[label="<C0>|Filename: practica.cpp\n Content: foreach\n Balance Factor: 0\n Height: 1\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin|<C1>"]
-Practica1py[label="Filename: Practica1.py\n Content: Esta practica es sobre\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-practicacpp:C0->Practica1py
-youtubehtml[label="Filename: youtube.html\n Content: videos\n Balance Factor: 0\n Height: 0\n TimeStamp: 14/11/2019 05:43:40\n Owner: admin"]
-practicacpp:C1->youtubehtml
-Notasxlsx:C1->practicacpp
-Justificaciondocx:C1->Notasxlsx
+Res[label="Filename: Res\n Content: kajsdas\n Balance Factor: 0\n Height: 0\n TimeStamp: 17/11/2019 09:50:06\n Owner: admin"]
 }

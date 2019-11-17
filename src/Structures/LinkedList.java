@@ -63,7 +63,9 @@ public class LinkedList {
 
     public void edit(String pathParent, String oldname, String newname) {
         String old_path = pathParent + oldname + "/";
-
+//        if(search(pathParent+"/"+newname)){
+//            
+//        }
         NodeList temp = this.Head;
         while (temp != null) {
             String new_path = pathParent + newname + "/";
@@ -136,7 +138,7 @@ public class LinkedList {
         return next;
     }
 
-    private NodeList searchGraph(String path) {
+    public NodeList searchGraph(String path) {
         NodeList temp = this.Head;
         while (temp != null) {
             if (temp.Folders.getFolderPath().equals(path)) {
@@ -148,7 +150,6 @@ public class LinkedList {
     }
 
     private void RemoveNodes(NodeList current) {
-        int count = 0;
         NodeList temp = this.Head;
         while (temp != null) {
             if (CompareRout(current.Folders.getFolderPath(), temp.Folders.getFolderPath())) {
@@ -157,7 +158,6 @@ public class LinkedList {
                 temp = temp.Next;
             }
         }
-        System.out.println(count);
     }
 
     public void editGraph(NodeList temp, String pathold, String pathnew, String oldname, String newname) {
@@ -388,7 +388,9 @@ public class LinkedList {
             // Nodes------------------------------------------------------------
             current = this.Head;
             while (current != null) {
-                pw.println(current.Folders.getFolderName() + " [label =\"" + current.Folders.getFolderPath() + "\"]");
+                if (!current.Folders.getFolderPath().equalsIgnoreCase("Root/")) {
+                    pw.println(current.Folders.getFolderName() + " [label =\"" + current.Folders.getFolderPath() + "\"]");
+                }
                 current = current.Next;
             }
             //------------------------------------------------------------------

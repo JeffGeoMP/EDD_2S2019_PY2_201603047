@@ -48,41 +48,46 @@ public class Stack {
             }
         }
     }
-    
-    public void DeleteFile(String path){
+
+    public void DeleteFile(String path) {
         File archivo = new File(path);
         archivo.delete();
     }
 
     public void GenerateImage(int n) {
         final String rutaDot = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
-        String rutaImagen = "Stack"+n+".png";
+        String rutaImagen = "Stack" + n + ".png";
         String rutatxt = "src\\Files .DOT\\Stack.txt";
         String parametroT = "-Tpng";
         String parametroO = "-o";
 
         FileWriter archivo = null;
         PrintWriter pw = null;
-        
+
         try {
             archivo = new FileWriter(rutatxt);
             pw = new PrintWriter(archivo);
             pw.println("digraph G {");
             pw.println("rankdir=LR");
             pw.println("node [shape = record, style=filled, fillcolor=seashell2]");
-            pw.println("stack[label=\"");
-            
-            Node temp = this.head;
-            while (temp != null) {
-                if (temp.next != null) {
-                    pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation + " | ");
-                } else {
-                    pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation);
+
+            if (this.head != null) {
+                pw.println("stack[label=\"");
+                Node temp = this.head;
+                while (temp != null) {
+                    if (temp.next != null) {
+                        pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation + " | ");
+                    } else {
+                        pw.println("Date: " + temp.Date + " Hour: " + temp.Hour + "\\n UserName: " + temp.Username + "\\n Operation: " + temp.Operation);
+                    }
+                    temp = temp.next;
                 }
-                temp = temp.next;
+                pw.println("\"];");
+            } else {
+                pw.println("node0[label=\"Not Found Operations\"];");
             }
-            pw.println("\"];");
-            pw.println("aux [shape = plaintext, label=\"Operaciones: "+this.count+"\"]");
+
+            pw.println("aux [shape = plaintext, label=\"Operaciones: " + this.count + "\"]");
             pw.println("}");
             archivo.close();
 

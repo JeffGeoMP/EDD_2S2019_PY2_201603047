@@ -21,7 +21,7 @@ public class Users {
             this.Pass = pass;
             this.Hour = Hour();
             this.Date = Date();
-            this.Graph = new LinkedList();
+            this.Graph = new LinkedList("Root/");
         }
 
     public String getHour() {

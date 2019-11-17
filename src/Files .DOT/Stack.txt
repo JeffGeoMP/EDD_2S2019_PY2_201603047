@@ -1,7 +1,6 @@
 digraph G {
 rankdir=LR
 node [shape = record, style=filled, fillcolor=seashell2]
-stack[label="
-"];
+node0[label="Not Found Operations"];
 aux [shape = plaintext, label="Operaciones: 0"]
 }

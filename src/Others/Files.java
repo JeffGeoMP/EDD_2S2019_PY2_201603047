@@ -26,6 +26,7 @@ public class Files {
     }
     
     public Files(String Filename, String Content, String Username, String Date, String Hour){
+        this.Filename = this.removept(Filename);
         this.FilenameAbsolute = Filename;
         this.Content = Content;
         this.Username = Username;

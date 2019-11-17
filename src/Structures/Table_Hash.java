@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class Table_Hash {
 
-    private Object[] Users;
+    public Object[] Users;
     private int Size_Prime;
     private int Mod;
     private int Elements;
@@ -95,6 +95,18 @@ public class Table_Hash {
         }
         Hash = Hash % Mod;              //Index of Array for User
         return Hash;
+    }
+    
+    public int IndexUser(String user){
+        for(int i = 0; i<Users.length; i++){
+            if(Users[i]!=null){
+                Users current_user = (Users) Users[i];
+                if(current_user.getUser().equals(user)){
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     private int Next_Number_Prime() {
