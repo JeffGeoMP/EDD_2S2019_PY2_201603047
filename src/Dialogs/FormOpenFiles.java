@@ -24,8 +24,8 @@ public class FormOpenFiles extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         filename = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Edit Content");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Open Files");
 
         Content.setText("Content of File: ");
 

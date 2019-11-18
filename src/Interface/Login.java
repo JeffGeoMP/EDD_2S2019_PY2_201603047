@@ -117,6 +117,8 @@ public class Login extends javax.swing.JFrame {
                 if(Users.Search(Username.getText(), Password.getText())){
                     JOptionPane.showMessageDialog(null, "Welcome "+Username.getText()+" to EDD System","Information",JOptionPane.INFORMATION_MESSAGE);
                     UserIndex = Users.IndexUser(Username.getText());
+                    Operations.add("Login User", Username.getText());
+                    
                     EDD_Platform System = new EDD_Platform(Username.getText(), UserIndex, Users, Operations);
                     System.setVisible(true);
                     this.dispose();

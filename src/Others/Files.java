@@ -18,7 +18,7 @@ public class Files {
 
     public Files(String FilenameAbsolute, String Content, String Username) {
         this.FilenameAbsolute = FilenameAbsolute;
-        this.Filename = this.removept(FilenameAbsolute);
+        this.Filename = FilenameAbsolute;
         this.Content = Content;
         this.Username = Username;
         this.Date = Date();
@@ -26,7 +26,7 @@ public class Files {
     }
     
     public Files(String Filename, String Content, String Username, String Date, String Hour){
-        this.Filename = this.removept(Filename);
+        this.Filename = Filename;
         this.FilenameAbsolute = Filename;
         this.Content = Content;
         this.Username = Username;
@@ -80,15 +80,5 @@ public class Files {
         Date date = new Date();
         DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
         return dateformat.format(date);
-    }
-    private String removept(String s){
-        String new_s = "";
-        for(int i = 0; i<s.length(); i++){
-            char car = s.charAt(i);
-            if(car!=46){        //46 is in code ascci = .
-                new_s += car;
-            }
-        }
-        return new_s;
     }
 }

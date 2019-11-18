@@ -14,11 +14,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -55,69 +57,98 @@ public class AVLTree {
     //--------------------------------------------------------------------------
 
     //Using Interface ----------------------------------------------------------
-    public void add(String FilenameAbsolute, String Content, String Username) {
-        NodeAVL new_node = new NodeAVL(FilenameAbsolute, Content, Username);
+    public boolean add(String Filename, String Content, String Username) {
+        boolean successfull = false;
+        NodeAVL new_node = new NodeAVL(Filename, Content, Username);
         if (this.Root == null) {
             Root = new_node;
+            successfull = true;
         } else {
             Root = addAVL(new_node, Root);
+            successfull = true;
         }
+        return successfull;
     }
 
-    public void Remove(String Filename) {
-        if(Search(Filename)){
-            System.out.println("Encontrado y Eliminado");
-        }
-        Root = removeAVL(Root, Filename);
-    }
-
-
-    public boolean Search(String FilenameAbsolute) {
-        return (searchAVL(this.Root, FilenameAbsolute) != null);
-    }
-    
-    
-    public void EditName(String Filename, String new_FilenameAbsolute) {
-        if (this.Search(Filename)) {
-            NodeAVL temp = searchAVL(this.Root, Filename);
-            NodeAVL aux = new NodeAVL(new_FilenameAbsolute, temp.File.getContent(), temp.File.getUsername(), temp.File.getDate(), temp.File.getHour());
-            Remove(Filename);
-            if (this.Root == null) {
-                Root = aux;
+    public boolean Remove(String FilenameAbsolute) {
+        boolean successfull = false;
+        NodeAVL aux = searchAVL(this.Root, FilenameAbsolute);
+        if (aux != null) {
+            if (JOptionPane.showConfirmDialog(null, "Do you want to Delete the File: " + FilenameAbsolute, "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Root = removeAVL(Root, FilenameAbsolute);
+                JOptionPane.showMessageDialog(null, "File Delete", "Information", JOptionPane.INFORMATION_MESSAGE);
+                successfull = true;
             } else {
-                Root = addAVL(aux, Root);
-            }
-            this.InOrden(this.Root);
-        } else {
-            System.out.println("Not Found File");
-        }
-    }
-
-    public void EditContent(String FilenameAbsolute, String new_Content) {
-        if (this.Search(FilenameAbsolute)) {
-            NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
-            Root = removeAVL(Root, FilenameAbsolute);
-            temp.File.setContent(new_Content);
-            if (this.Root == null) {
-                Root = temp;
-            } else {
-                Root = addAVL(temp, Root);
+                JOptionPane.showMessageDialog(null, "Without Changes", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
-            System.out.println("Not Found File");
+            JOptionPane.showMessageDialog(null, "File Not Found", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
+        return successfull;
     }
-    
-    public String getContent(String Filename){
+
+    public boolean Rename(String FilenameAbsolute, String newFilenameAbsolute) {
+        boolean sucessfull = false;
+        if (!newFilenameAbsolute.isEmpty()) {
+            if (!FilenameAbsolute.equals(newFilenameAbsolute)) {
+                NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
+                NodeAVL temp2 = searchAVL(this.Root, newFilenameAbsolute);
+                if (temp != null) {
+                    if (temp2 == null) {
+                        NodeAVL aux = new NodeAVL(newFilenameAbsolute, temp.File.getContent(), temp.File.getUsername(), temp.File.getDate(), temp.File.getHour());
+                        this.Root = removeAVL(this.Root, FilenameAbsolute);
+                        if (this.Root == null) {
+                            Root = aux;
+                        } else {
+                            Root = addAVL(aux, Root);
+                        }
+                        sucessfull = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "New File Name Already Exists", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "File Not Found", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Old Name and New Name is equals", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "New File Name is empty", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return sucessfull;
+    }
+
+    public boolean EditContent(String FilenameAbsolute, String new_Content) {
+        boolean successfull = false;
+        NodeAVL temp = searchAVL(this.Root, FilenameAbsolute);
+
+        if (temp != null) {
+            if (!temp.File.getContent().equals(new_Content)) {
+                temp.File.setContent(new_Content);
+                JOptionPane.showMessageDialog(null, "Content Changue", "Information", JOptionPane.INFORMATION_MESSAGE);
+                successfull = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Not Change Content", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "File Not Found", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return successfull;
+    }
+
+    public String getContent(String Filename) {
         NodeAVL temp = searchAVL(this.Root, Filename);
         String Content = "";
-        if(temp!=null){
-           Content = temp.File.getContent();
+        if (temp != null) {
+            Content = temp.File.getContent();
         }
         return Content;
     }
 
-    public void AddGraphics(NodeAVL n, int x, JPanel panel, int Panel_Height, int width, int height, int Line_Folders, MouseListener e, int aux) {
+    public int AddGraphics(int sep, NodeAVL n, int x, JPanel panel, int Panel_Height, int width, int height, int Line_Folders, MouseListener e, int aux, ImageIcon icon) {
+        int panel_height = Panel_Height;
+        int Folders_Line = 7;
+        int sep_ver = 30;
         String Noes = Nodes(this.Root);
         String New_Line = "";
         for (int i = 0; i < Noes.length(); i++) {
@@ -128,23 +159,34 @@ public class AVLTree {
                 //Fields[1] = Filename;
                 String[] Fields = New_Line.split(",");
                 JLabel File = new JLabel();
+                JLabel Etiqueta = new JLabel();
                 File.setName(Fields[1]);
                 File.setText(Fields[0]);
-                if (x != 0 && x % 9 == 0) {
-                    Line_Folders++;
-                    Panel_Height = Line_Folders * height + 20;
-                }
-                aux = x - 9 * (Line_Folders);
-                File.setBounds(aux * width + 15, Panel_Height, width, height);
-                Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-                File.setBorder(border);
+                File.setIcon(icon);
                 File.addMouseListener(e);
+
+                Etiqueta.setText(Fields[0]);
+                Etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
+                if (x != 0 && x % Folders_Line == 0) {
+                    Line_Folders++;
+                    panel_height = Line_Folders * height + Line_Folders * sep_ver + 15;
+                    sep = 20;
+                }
+                aux = x - Folders_Line * (Line_Folders);
+                File.setBounds(aux * width + sep, panel_height, width, height);
+                Etiqueta.setBounds(aux * width + sep, panel_height + height - 15, width, 30);
+                sep += 20;
+//                Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+//                File.setBorder(border);
+
                 panel.add(File);
+                panel.add(Etiqueta);
                 x++;
 
                 New_Line = "";
             }
         }
+        return panel_height;
     }
 
     public void DeleteFile(String path) {
@@ -152,12 +194,12 @@ public class AVLTree {
         archivo.delete();
     }
 
-    public void BulkLoad(JFrame frame, String Username) {
+    public int BulkLoad(JFrame frame, String Username) {
         boolean VerFile = false;
-        
+        int addfiles = 0;
         JFileChooser file = new JFileChooser();
         file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        
+
         FileNameExtensionFilter Filter = new FileNameExtensionFilter("Files .CSV", "csv");
         file.setFileFilter(Filter);
 
@@ -170,11 +212,12 @@ public class AVLTree {
                 String line = br.readLine();
                 while (null != line) {
                     String[] fields = line.split(",");
-                    if(fields[0].equalsIgnoreCase("Archivo") && fields[1].equalsIgnoreCase("Contenido")){
+                    if (fields[0].equalsIgnoreCase("Archivo") && fields[1].equalsIgnoreCase("Contenido")) {
                         VerFile = true;
                     }
-                    if (!fields[0].equalsIgnoreCase("Archivo") && !fields[1].equalsIgnoreCase("Contenido") && VerFile==true) {
+                    if (!fields[0].equalsIgnoreCase("Archivo") && !fields[1].equalsIgnoreCase("Contenido") && VerFile == true) {
                         this.add(fields[0], this.removeqt(fields[1]), Username);
+                        addfiles++;
                     }
                     line = br.readLine();
                 }
@@ -192,6 +235,7 @@ public class AVLTree {
                 }
             }
         }
+        return addfiles;
     }
 
     public void GenerateImage(int n) {
@@ -210,9 +254,9 @@ public class AVLTree {
             pw.println("digraph G {");
             pw.println("rankdir=TB");
             pw.println("node [shape = record, style=filled, fillcolor=seashell2]");
-            if(Root!=null){
+            if (Root != null) {
                 pw.print(Code(Root));
-            }else{
+            } else {
                 pw.print("node0[label=\"Not Found Files\"];");
             }
             pw.println("}");
@@ -241,20 +285,31 @@ public class AVLTree {
     private String Code(NodeAVL n) {
         String values = "";
         if (n.Left == null && n.Right == null) {
-            values += n.File.getFilename() + "[label=\"Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "\"]\n";
+            values += removept(n.File.getFilename()) + "[label=\"Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "\"]\n";
         } else {
-            values += n.File.getFilename() + "[label=\"<C0>|Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "|<C1>\"]\n";
+            values += removept(n.File.getFilename()) + "[label=\"<C0>|Filename: " + n.File.getFilenameAbsoulte() + "\\n Content: " + n.File.getContent() + "\\n Balance Factor: " + Balance(n) + "\\n Height: " + n.Height + "\\n TimeStamp: " + n.File.getDate() + " " + n.File.getHour() + "\\n Owner: " + n.File.getUsername() + "|<C1>\"]\n";
         }
         if (n.Left != null) {
-            values += Code(n.Left) + n.File.getFilename() + ":C0->" + n.Left.File.getFilename() + "\n";
+            values += Code(n.Left) + removept(n.File.getFilename()) + ":C0->" + removept(n.Left.File.getFilename()) + "\n";
         }
         if (n.Right != null) {
-            values += Code(n.Right) + n.File.getFilename() + ":C1->" + n.Right.File.getFilename() + "\n";
+            values += Code(n.Right) + removept(n.File.getFilename()) + ":C1->" + removept(n.Right.File.getFilename()) + "\n";
         }
         return values;
     }
 
-    private String Nodes(NodeAVL n) {
+    private String removept(String s) {
+        String new_s = "";
+        for (int i = 0; i < s.length(); i++) {
+            char car = s.charAt(i);
+            if (car != 46) {        //46 is in code ascci = .
+                new_s += car;
+            }
+        }
+        return new_s;
+    }
+
+    public String Nodes(NodeAVL n) {
         String values = "";
 
         if (n.Left == null && n.Right == null) {
@@ -274,73 +329,80 @@ public class AVLTree {
     }
 
     //Operations in the AVL Tree -----------------------------------------------
-    private NodeAVL addAVL(NodeAVL new_node, NodeAVL subtree) {
-        NodeAVL sup = subtree;
-        int Comparation = new_node.File.getFilename().compareToIgnoreCase(subtree.File.getFilename());
+    private NodeAVL addAVL(NodeAVL subtree, NodeAVL new_node) {
+        NodeAVL sup = new_node;
+        int Comparation = subtree.File.getFilenameAbsoulte().compareToIgnoreCase(new_node.File.getFilenameAbsoulte());
         if (Comparation < 0) {
-            if (subtree.Left == null) {
-                subtree.Left = new_node;
+            if (new_node.Left == null) {
+                new_node.Left = subtree;
             } else {
-                subtree.Left = addAVL(new_node, subtree.Left);
-                if ((this.Height(subtree.Left) - this.Height(subtree.Right)) == 2) {
-                    int Comparation2 = Data(new_node).compareToIgnoreCase(subtree.Left.File.getFilename());
+                new_node.Left = addAVL(subtree, new_node.Left);
+                if ((this.Height(new_node.Left) - this.Height(new_node.Right)) == 2) {
+                    int Comparation2 = Data(subtree).compareToIgnoreCase(new_node.Left.File.getFilenameAbsoulte());
                     if (Comparation2 < 0) {
-                        sup = RotationLeft(subtree);
+                        sup = RotationLeft(new_node);
                     } else {
-                        sup = DRotationLeft(subtree);
+                        sup = DRotationLeft(new_node);
                     }
                 }
             }
         } else if (Comparation > 0) {
-            if (subtree.Right == null) {
-                subtree.Right = new_node;
+            if (new_node.Right == null) {
+                new_node.Right = subtree;
             } else {
-                subtree.Right = addAVL(new_node, subtree.Right);
-                if ((this.Height(subtree.Right) - this.Height(subtree.Left)) == 2) {
-                    int Comparation2 = new_node.File.getFilename().compareToIgnoreCase(subtree.Right.File.getFilename());
+                new_node.Right = addAVL(subtree, new_node.Right);
+                if ((this.Height(new_node.Right) - this.Height(new_node.Left)) == 2) {
+                    int Comparation2 = subtree.File.getFilenameAbsoulte().compareToIgnoreCase(new_node.Right.File.getFilenameAbsoulte());
                     if (Comparation2 > 0) {
-                        sup = RotationRight(subtree);
+                        sup = RotationRight(new_node);
                     } else {
-                        sup = DRotationRight(subtree);
+                        sup = DRotationRight(new_node);
                     }
                 }
             }
         } else {
             if (Comparation == 0) {
-                System.out.println("File is " + new_node.File.getFilename());
+                if (JOptionPane.showConfirmDialog(null, "Do you want to overwrite the file " + subtree.File.getFilenameAbsoulte() + "?", "WARNING",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    NodeAVL node = searchAVL(this.Root, subtree.File.getFilenameAbsoulte());
+                    node.File.setContent(subtree.File.getContent());
+                    JOptionPane.showMessageDialog(null, "Overwritten File", "Information", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "File not Overwritten", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
-        if (subtree.Left == null && (subtree.Right != null)) {
-            subtree.Height = subtree.Right.Height + 1;
-        } else if (subtree.Right == null && (subtree.Left != null)) {
-            subtree.Height = subtree.Left.Height + 1;
+        if (new_node.Left == null && (new_node.Right != null)) {
+            new_node.Height = new_node.Right.Height + 1;
+        } else if (new_node.Right == null && (new_node.Left != null)) {
+            new_node.Height = new_node.Left.Height + 1;
         } else {
-            subtree.Height = Math.max(this.Height(subtree.Left), this.Height(subtree.Right)) + 1;
+            new_node.Height = Math.max(this.Height(new_node.Left), this.Height(new_node.Right)) + 1;
         }
         return sup;
     }
 
-    private NodeAVL searchAVL(NodeAVL root, String Filename) {
+    private NodeAVL searchAVL(NodeAVL root, String FilenameAbsolute) {
         if (root == null) {
             return null;
-        } else if (root.File.getFilename().equals(Filename)) {
+        } else if (root.File.getFilenameAbsoulte().equals(FilenameAbsolute)) {
             return root;
-        } else if (root.File.getFilename().compareToIgnoreCase(Filename) < 0) {
-            return searchAVL(root.Right, Filename);
+        } else if (root.File.getFilenameAbsoulte().compareToIgnoreCase(FilenameAbsolute) < 0) {
+            return searchAVL(root.Right, FilenameAbsolute);
         } else {
-            return searchAVL(root.Left, Filename);
+            return searchAVL(root.Left, FilenameAbsolute);
         }
     }
 
-    private NodeAVL removeAVL(NodeAVL n, String key) {
+    private NodeAVL removeAVL(NodeAVL n, String FilenameAbsolute) {
         if (n == null) {
             return null;
         }
-        int Comparation = key.compareToIgnoreCase(n.File.getFilename());
+        int Comparation = FilenameAbsolute.compareToIgnoreCase(n.File.getFilenameAbsoulte());
         if (Comparation < 0) {
-            n.Left = removeAVL(n.Left, key);
+            n.Left = removeAVL(n.Left, FilenameAbsolute);
         } else if (Comparation > 0) {
-            n.Right = removeAVL(n.Right, key);
+            n.Right = removeAVL(n.Right, FilenameAbsolute);
         } else {
 
             if (n.Left == null) {
@@ -400,14 +462,14 @@ public class AVLTree {
         while (node.Left != null) {     //Helper Method to find
             node = node.Left;           //the LeftMost Node
         }
-        return node.File.getFilename();                //Which has the smallest 
+        return node.File.getFilenameAbsoulte();                //Which has the smallest 
     }
 
     private String findMax(NodeAVL node) {
         while (node.Right != null) {    //Helper Method to find
             node = node.Right;          //thr RightMost node
         }
-        return node.File.getFilename();                //Which has te largest value
+        return node.File.getFilenameAbsoulte();                //Which has te largest value
     }
 
     private String Data(NodeAVL n) {
@@ -432,7 +494,7 @@ public class AVLTree {
     public void InOrden(NodeAVL n) {
         if (n != null) {
             InOrden(n.Left);
-            System.out.println(n.File.getFilename() + "," + n.File.getContent());
+            System.out.println(n.File.getFilename() + " , " + n.File.getContent());
             InOrden(n.Right);
         }
     }

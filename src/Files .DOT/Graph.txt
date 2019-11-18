@@ -1,17 +1,7 @@
 digraph G {
 graph [layout = circo]
 node [shape = circle, style=filled, fillcolor=seashell2]
-Root [label= "Root/\n Directories: 2"]
-RootMusica [label= "Musica\n Directories: 3"]
-RootPeliculas [label= "Peliculas\n Directories: 1"]
-RootMusicaSalsa [label= "Salsa\n Directories: 0"]
-RootMusicaMerengue [label= "Merengue\n Directories: 0"]
-RootMusicaPerreo [label= "Perreo\n Directories: 0"]
-RootPeliculasRescatando [label= "Rescatando\n Directories: 0"]
-Root->RootMusica
+Root [label= "Root/\n Directories: 1"]
+RootPeliculas [label= "Peliculas\n Directories: 0"]
 Root->RootPeliculas
-RootMusica->RootMusicaSalsa
-RootMusica->RootMusicaMerengue
-RootMusica->RootMusicaPerreo
-RootPeliculas->RootPeliculasRescatando
 }

@@ -138,7 +138,7 @@ public class Register extends javax.swing.JFrame {
                 try {
                     JOptionPane.showMessageDialog(null, "User Add to EDD Drive", "Information", JOptionPane.INFORMATION_MESSAGE);
                     Users.Add(username.getText(), pass.getText());
-                    //Operations.add("He Joined EDD System", username.getText());
+                    Operations.add("Register User", username.getText());
                     Login login = new Login(Users, Operations);
                     login.setVisible(true);
                     this.dispose();
@@ -149,7 +149,6 @@ public class Register extends javax.swing.JFrame {
                 Pass2V.setText("Passwords Do Not Match");
                 Pass2V.setForeground(Color.RED);
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Please Check to Information", "Information", JOptionPane.ERROR_MESSAGE);
         }

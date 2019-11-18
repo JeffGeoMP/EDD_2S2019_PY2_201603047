@@ -33,7 +33,7 @@ public class FormA extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         filename = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Add File");
 
         jLabel1.setText("Input Filename");
@@ -109,8 +109,12 @@ public class FormA extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!filename.getText().isEmpty() && !cadena.getText().isEmpty()) {
-            this.Data(filename.getText(), cadena.getText());
-            this.dispose();
+            if (filename.getText().contains(".")) {
+                this.Data(filename.getText(), cadena.getText());
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "The File not contain any extension", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Fields Emptys", "Information", JOptionPane.INFORMATION_MESSAGE);
         }

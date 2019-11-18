@@ -1,6 +1,6 @@
+
 package Structures;
 
-import Others.Folder;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,21 +10,18 @@ import java.io.PrintWriter;
  *
  * @author JeffGeo
  */
-public class LinkedList {
-
-    public NodeList Head;
+public class Matrix {
+        public NodeList Head;
     public NodeList End;
     public int Size;
 
-    public LinkedList() {
+    public Matrix() {
         this.Head = null;
         this.End = null;
         this.Size = 0;
     }
 
-    public LinkedList(String Nameroot) {
-        this.addRoot(Nameroot);
-    }
+    
 
     //Methods Graph-----------------------------------------------------------
     public boolean Isempty() {
@@ -36,8 +33,7 @@ public class LinkedList {
         if (Parent != null) {
             NodeList new_node = new NodeList(Foldername, FolderPath + Foldername + "/", Parent);
             NodeList new_node_list = new NodeList(Foldername, FolderPath + Foldername + "/", Parent);
-            addGraph(new_node);
-            Parent.SubFolders.addGraph(new_node_list);
+            addMatrix(new_node);
         } else {
             System.out.println("Parent Not Found");
         }
@@ -52,7 +48,7 @@ public class LinkedList {
 
             NodeList delete_node_parent = parent_node.SubFolders.searchGraph(FolderPath);
             if (delete_node_parent != null) {
-                parent_node.SubFolders.RemoveNodes(delete_node_parent);
+                RemoveNodes(delete_node);
             }
         }
     }
@@ -88,10 +84,10 @@ public class LinkedList {
 
     private void addRoot(String Nameroot) {
         NodeList new_node = new NodeList(Nameroot, "Root/", null);
-        addGraph(new_node);
+        addMatrix(new_node);
     }
 
-    private void addGraph(NodeList new_node) {
+    private void addMatrix(NodeList new_node) {
         if (this.Isempty()) {
             this.Head = new_node;
             this.End = new_node;
@@ -385,27 +381,23 @@ public class LinkedList {
             }
             //------------------------------------------------------------------
 
-            
-            
-            
-            
             // Nodes------------------------------------------------------------
             current = this.Head;
             while (current != null) {
                 if (!current.Folders.getFolderPath().equalsIgnoreCase("Root/")) {
-                    pw.println("N"+QuitSlash(current.Folders.getFolderPath()) + " [label =\"" + current.Folders.getFolderPath() + "\"]");
+                    pw.println(current.Folders.getFolderName() + " [label =\"" + current.Folders.getFolderPath() + "\"]");
                 }
                 current = current.Next;
             }
             //------------------------------------------------------------------
 
-            //Linked Nodes with path---------------------------------------------
+            //Linked Nodes------------------------------------------------------
             current = this.Head;
             while (current != null) {
                 NodeList sub = current.SubFolders.Head;
                 while (sub != null) {
                     if (sub.Next != null) {
-                        pw.println("N"+QuitSlash(sub.Folders.getFolderPath())+ " -> " + "N"+QuitSlash(sub.Next.Folders.getFolderPath()));
+                        pw.println(sub.Folders.getFolderName() + " -> " + sub.Next.Folders.getFolderName());
                     }
                     sub = sub.Next;
                 }
@@ -413,12 +405,12 @@ public class LinkedList {
             }
             //------------------------------------------------------------------
 
-            //Linked Nodes with F-----------------------------------------------
+            //Linked Nodes with F------------------------------------------------------
             current = this.Head;
             while (current != null) {
                 NodeList sub = current.SubFolders.Head;
                 if (sub != null) {
-                    pw.println("F" + QuitSlash(current.Folders.getFolderPath()) + " -> " + "N"+QuitSlash(sub.Folders.getFolderPath()) + "[constraint = false]");
+                    pw.println("F" + QuitSlash(current.Folders.getFolderPath()) + " -> " + sub.Folders.getFolderName() + "[constraint = false]");
                 }
                 current = current.Next;
             }
@@ -432,7 +424,7 @@ public class LinkedList {
                     pw.print("{rank=same; F" + QuitSlash(current.Folders.getFolderPath()));
                 }
                 while (sub != null) {
-                    pw.print(" " + "N"+QuitSlash(sub.Folders.getFolderPath()));
+                    pw.print(" " + sub.Folders.getFolderName());
                     sub = sub.Next;
                 }
                 sub = current.SubFolders.Head;
@@ -447,7 +439,7 @@ public class LinkedList {
             current = this.Head;
             while (current != null) {
                 if (current != Head) {
-                    pw.println("C" + QuitSlash(current.Folders.getFolderPath()) + "->" + "N"+QuitSlash(current.Folders.getFolderPath()));
+                    pw.println("C" + QuitSlash(current.Folders.getFolderPath()) + "->" + current.Folders.getFolderName());
                 }
                 current = current.Next;
             }
@@ -489,3 +481,5 @@ public class LinkedList {
 //-------------------------------------------------------------------------
 
 }
+    
+

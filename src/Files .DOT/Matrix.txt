@@ -3,53 +3,8 @@ rankdir = TB;
 node [shape = rectangle, style=filled, fillcolor=seashell2];
 graph [nodesep = 0.5, splines=ortho];
 FRoot [label="Root/"]
-FRootMusica [label="Musica"]
-FRootPeliculas [label="Peliculas"]
-FRootMusicaSalsa [label="Salsa"]
-FRootMusicaMerengue [label="Merengue"]
-FRootMusicaPerreo [label="Perreo"]
-FRootPeliculasRescatando [label="Rescatando"]
 Matrix->FRoot
-FRoot -> FRootMusica
-FRootMusica -> FRootPeliculas
-FRootPeliculas -> FRootMusicaSalsa
-FRootMusicaSalsa -> FRootMusicaMerengue
-FRootMusicaMerengue -> FRootMusicaPerreo
-FRootMusicaPerreo -> FRootPeliculasRescatando
 CRoot [label="Root/"]
-CRootMusica [label="Musica"]
-CRootPeliculas [label="Peliculas"]
-CRootMusicaSalsa [label="Salsa"]
-CRootMusicaMerengue [label="Merengue"]
-CRootMusicaPerreo [label="Perreo"]
-CRootPeliculasRescatando [label="Rescatando"]
 Matrix->CRoot
-CRoot -> CRootMusica
-CRootMusica -> CRootPeliculas
-CRootPeliculas -> CRootMusicaSalsa
-CRootMusicaSalsa -> CRootMusicaMerengue
-CRootMusicaMerengue -> CRootMusicaPerreo
-CRootMusicaPerreo -> CRootPeliculasRescatando
-Musica [label ="Root/Musica/"]
-Peliculas [label ="Root/Peliculas/"]
-Salsa [label ="Root/Musica/Salsa/"]
-Merengue [label ="Root/Musica/Merengue/"]
-Perreo [label ="Root/Musica/Perreo/"]
-Rescatando [label ="Root/Peliculas/Rescatando/"]
-Musica -> Peliculas
-Salsa -> Merengue
-Merengue -> Perreo
-FRoot -> Musica[constraint = false]
-FRootMusica -> Salsa[constraint = false]
-FRootPeliculas -> Rescatando[constraint = false]
-{rank=same; FRoot Musica Peliculas }
-{rank=same; FRootMusica Salsa Merengue Perreo }
-{rank=same; FRootPeliculas Rescatando }
-CRootMusica->Musica
-CRootPeliculas->Peliculas
-CRootMusicaSalsa->Salsa
-CRootMusicaMerengue->Merengue
-CRootMusicaPerreo->Perreo
-CRootPeliculasRescatando->Rescatando
-{rank=same; Matrix  CRoot CRootMusica CRootPeliculas CRootMusicaSalsa CRootMusicaMerengue CRootMusicaPerreo CRootPeliculasRescatando}
+{rank=same; Matrix  CRoot}
 }

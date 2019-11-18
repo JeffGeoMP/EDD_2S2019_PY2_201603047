@@ -1,5 +1,4 @@
 digraph G {
 rankdir=TB
 node [shape = record, style=filled, fillcolor=seashell2]
-Res[label="Filename: Res\n Content: kajsdas\n Balance Factor: 0\n Height: 0\n TimeStamp: 17/11/2019 09:50:06\n Owner: admin"]
-}
+node0[label="Not Found Files"];}
