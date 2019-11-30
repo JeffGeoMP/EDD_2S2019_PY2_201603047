@@ -22,7 +22,7 @@ public class Login extends javax.swing.JFrame {
     
     public Login(Table_Hash Users, Stack Operations) {
         initComponents();
-        Load_Images(Login);             //Load Imagenes for JFrame
+        Load_Images();             //Load Imagenes for JFrame
         this.Users = Users;             //Load Users
         this.Operations = Operations;   //Load Operations
         this.UserIndex = -1;            //Index Users
@@ -142,11 +142,11 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_New_UserMouseClicked
 
-    private void Load_Images(JLabel login){
-        Image imglogin = new ImageIcon(getClass().getResource("../Images/login.png")).getImage();
-        Image newimglogin = imglogin.getScaledInstance(login.getWidth(), login.getHeight(), Image.SCALE_SMOOTH);
+    private void Load_Images(){
+        Image imglogin = new ImageIcon(getClass().getResource("/Images/login.png")).getImage();
+        Image newimglogin = imglogin.getScaledInstance(Login.getWidth(), Login.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimglogin);
-        login.setIcon(icon);
+        Login.setIcon(icon);
     }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

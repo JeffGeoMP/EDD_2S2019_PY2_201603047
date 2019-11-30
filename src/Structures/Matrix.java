@@ -232,7 +232,6 @@ public class Matrix {
         System.out.println("Folders in the system: " + this.Size);
         while (temp != null) {
             System.out.println("Foldername: " + temp.Folders.getFolderName() + " FolderPath: " + temp.Folders.getFolderPath() + "  Folder Up: " + printRoot(temp));
-            temp.SubFolders.printSub();
             System.out.println("");
             System.out.println("");
             temp = temp.Next;

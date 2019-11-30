@@ -155,7 +155,7 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_checkActionPerformed
 
     private void Load_Images(JLabel checkin) {
-        Image imglogin = new ImageIcon(getClass().getResource("../Images/checkin.png")).getImage();
+        Image imglogin = new ImageIcon(getClass().getResource("/Images/checkin.png")).getImage();
         Image newimglogin = imglogin.getScaledInstance(checkin.getWidth(), checkin.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimglogin);
         checkin.setIcon(icon);

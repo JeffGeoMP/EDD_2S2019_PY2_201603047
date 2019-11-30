@@ -1,0 +1,25 @@
+digraph G {
+rankdir = TB;
+node [shape = rectangle, style=filled, fillcolor=seashell2];
+graph [nodesep = 0.5, splines=ortho];
+FRoot [label="Root/"]
+FRootMusica [label="Musica"]
+FRootPeliculas [label="Peliculas"]
+Matrix->FRoot
+FRoot -> FRootMusica
+FRootMusica -> FRootPeliculas
+CRoot [label="Root/"]
+CRootMusica [label="Musica"]
+CRootPeliculas [label="Peliculas"]
+Matrix->CRoot
+CRoot -> CRootMusica
+CRootMusica -> CRootPeliculas
+NRootMusica [label ="Root/Musica/"]
+NRootPeliculas [label ="Root/Peliculas/"]
+NRootMusica -> NRootPeliculas
+FRoot -> NRootMusica[constraint = false]
+{rank=same; FRoot NRootMusica NRootPeliculas }
+CRootMusica->NRootMusica
+CRootPeliculas->NRootPeliculas
+{rank=same; Matrix  CRoot CRootMusica CRootPeliculas}
+}

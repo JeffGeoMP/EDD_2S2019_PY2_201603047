@@ -9,16 +9,14 @@ import java.util.Date;
  * @author JeffGeo
  */
 public class Files {
-    private String FilenameAbsolute;
     private String Filename;
     private String Content;
     private String Date;
     private String Hour;
     private String Username;
 
-    public Files(String FilenameAbsolute, String Content, String Username) {
-        this.FilenameAbsolute = FilenameAbsolute;
-        this.Filename = FilenameAbsolute;
+    public Files(String Filename, String Content, String Username) {
+        this.Filename = Filename;
         this.Content = Content;
         this.Username = Username;
         this.Date = Date();
@@ -27,23 +25,14 @@ public class Files {
     
     public Files(String Filename, String Content, String Username, String Date, String Hour){
         this.Filename = Filename;
-        this.FilenameAbsolute = Filename;
         this.Content = Content;
         this.Username = Username;
         this.Date = Date;
         this.Hour = Hour;
     }
 
-    public String getFilenameAbsoulte() {
-        return FilenameAbsolute;
-    }
-
     public String getFilename() {
         return Filename;
-    }
-
-    public void setFilename(String Filename) {
-        this.Filename = Filename;
     }
 
     public String getContent() {
@@ -62,8 +51,8 @@ public class Files {
         return Username;
     }
 
-    public void setFilenameAbsolute(String Filename) {
-        this.FilenameAbsolute = Filename;
+    public void setFilename(String Filename) {
+        this.Filename = Filename;
     }
 
     public void setContent(String Content) {

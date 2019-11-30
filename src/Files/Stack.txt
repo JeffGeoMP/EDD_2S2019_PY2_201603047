@@ -1,0 +1,11 @@
+digraph G {
+rankdir=LR
+node [shape = record, style=filled, fillcolor=seashell2]
+stack[label="
+Date: 22/11/2019 Hour: 02:29:12\n UserName: admin\n Operation: Was added File: pyth.s | 
+Date: 22/11/2019 Hour: 02:29:02\n UserName: admin\n Operation: Was added Folder: Peliculas | 
+Date: 22/11/2019 Hour: 02:28:59\n UserName: admin\n Operation: Was added Folder: Musica | 
+Date: 22/11/2019 Hour: 02:28:56\n UserName: admin\n Operation: Login User
+"];
+aux [shape = plaintext, label="Operaciones: 4"]
+}

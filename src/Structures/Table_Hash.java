@@ -177,10 +177,11 @@ public class Table_Hash {
     public void GenerateImage(int n) {
         final String rutaDot = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
         String rutaImagen = "Hash" + n + ".png";
-        String rutatxt = "src\\Files .DOT\\Hash.txt";
+        String rutatxt = "Hash.txt";
         String parametroT = "-Tpng";
         String parametroO = "-o";
 
+       
         FileWriter archivo = null;
         PrintWriter pw = null;
 

@@ -1,7 +1,9 @@
 digraph G {
 graph [layout = circo]
 node [shape = circle, style=filled, fillcolor=seashell2]
-Root [label= "Root/\n Directories: 1"]
+Root [label= "Root/\n Directories: 2"]
+RootMusica [label= "Musica\n Directories: 0"]
 RootPeliculas [label= "Peliculas\n Directories: 0"]
+Root->RootMusica
 Root->RootPeliculas
 }

@@ -172,7 +172,6 @@ public class Reports extends javax.swing.JFrame {
             System.out.println("Existe");
             image.setIcon(new ImageIcon("AVLTree" + this.conFolder + ".png"));
             image.repaint();
-            Folder.DeleteFile("AVLTree" + this.conFolder + ".png");
             inf.setText("Showing Image of the Structure AVLTree");
 
         } else if (Table_Hash.isSelected()) {
@@ -180,35 +179,31 @@ public class Reports extends javax.swing.JFrame {
             System.out.println("Existe");
             image.setIcon(new ImageIcon("Hash" + this.conHash + ".png"));
             image.repaint();
-            Users.DeleteFile("Hash" + this.conHash + ".png");
             inf.setText("Showing Image of the Structure Table Hash");
 
         } else if (Stack.isSelected()) {
             image.setIcon(new ImageIcon("Stack" + this.conStack + ".png"));
             image.repaint();
-            Operations.DeleteFile("Stack" + this.conStack + ".png");
             inf.setText("Showing Image of the Structure Stack");
 
         } else if (Matrix.isSelected()) {
             image.setIcon(new ImageIcon("Matrix" + this.conMatrix + ".png"));
             image.repaint();
-            Graphe.DeleteFile("Matrix" + this.conMatrix + ".png");
             inf.setText("Showing Image of the Structure Matrix");
 
         } else if (Graph.isSelected()) {
             image.setIcon(new ImageIcon("Graph" + this.conGraph + ".png"));
             image.repaint();
-            Graphe.DeleteFile("Hash" + this.conGraph + ".png");
             inf.setText("Showing Image of the Structure Graph");
 
         } else {
             inf.setText("Not Process Image");
         }
-
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void LoadImages() {
-        Image img = new ImageIcon(getClass().getResource("../Images/ojo.png")).getImage();
+        Image img = new ImageIcon(getClass().getResource("/Images/ojo.png")).getImage();
         Image newimg = img.getScaledInstance(ver.getWidth(), ver.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimg);
         ver.setIcon(icon);
@@ -236,7 +231,6 @@ public class Reports extends javax.swing.JFrame {
                 System.out.println("Existe");
                 image.setIcon(new ImageIcon("AVLTree" + this.conFolder + ".png"));
                 image.repaint();
-                Folder.DeleteFile("AVLTree" + this.conFolder + ".png");
             } else {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -263,7 +257,6 @@ public class Reports extends javax.swing.JFrame {
                 System.out.println("Existe");
                 image.setIcon(new ImageIcon("Hash" + this.conHash + ".png"));
                 image.repaint();
-                Users.DeleteFile("Hash" + this.conHash + ".png");
             } else {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -287,7 +280,6 @@ public class Reports extends javax.swing.JFrame {
             if (temp.exists()) {
                 image.setIcon(new ImageIcon("Stack" + this.conStack + ".png"));
                 image.repaint();
-                Operations.DeleteFile("Stack" + this.conStack + ".png");
             } else {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -313,7 +305,6 @@ public class Reports extends javax.swing.JFrame {
             if (temp.exists()) {
                 image.setIcon(new ImageIcon("Matrix" + this.conMatrix + ".png"));
                 image.repaint();
-                Graphe.DeleteFile("Matrix" + this.conMatrix + ".png");
             } else {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -339,7 +330,6 @@ public class Reports extends javax.swing.JFrame {
             if (temp.exists()) {
                 image.setIcon(new ImageIcon("Graph" + this.conGraph + ".png"));
                 image.repaint();
-                Graphe.DeleteFile("Hash" + this.conGraph + ".png");
             } else {
                 JOptionPane.showMessageDialog(null, "The Image is still rendering", "Information", JOptionPane.INFORMATION_MESSAGE);
             }

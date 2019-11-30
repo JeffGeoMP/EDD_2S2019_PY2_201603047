@@ -57,7 +57,7 @@ public class Stack {
     public void GenerateImage(int n) {
         final String rutaDot = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
         String rutaImagen = "Stack" + n + ".png";
-        String rutatxt = "src\\Files .DOT\\Stack.txt";
+        String rutatxt = "Stack.txt";
         String parametroT = "-Tpng";
         String parametroO = "-o";
 

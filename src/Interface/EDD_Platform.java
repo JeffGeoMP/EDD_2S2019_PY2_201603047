@@ -43,7 +43,7 @@ public class EDD_Platform extends javax.swing.JFrame {
     //Structures aux
     private Table_Hash Users;           //Table Hash of the System
     private Stack Operations;           //Operations of the System
-    private LinkedList Graph;           //Graph of current user
+    private LinkedList Current_Graph;           //Graph of current user
 
     //Var of Control
     private int Index_User;             //Index Current User
@@ -68,7 +68,7 @@ public class EDD_Platform extends javax.swing.JFrame {
         username.setText(this.Current_User_Name);
 
         Users current_user = (Users) (Users.Users[Index_User]);
-        Graph = current_user.Graph;
+        Current_Graph = current_user.Graph;
 
         this.Current_Path = "";
         this.width = Panel.getWidth() / 10;     //Weight of Label
@@ -127,51 +127,51 @@ public class EDD_Platform extends javax.swing.JFrame {
     }
 
     private ImageIcon IconFolder(int Width, int Height) {
-        Image img = new ImageIcon(getClass().getResource("../Images/folder.png")).getImage();
+        Image img = new ImageIcon(getClass().getResource("/Images/folder.png")).getImage();
         Image newimg = img.getScaledInstance(Width, Height, Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimg);
         return icon;
     }
 
     private ImageIcon IconFile(int Width, int Height) {
-        Image img = new ImageIcon(getClass().getResource("../Images/file.png")).getImage();
+        Image img = new ImageIcon(getClass().getResource("/Images/file.png")).getImage();
         Image newimg = img.getScaledInstance(Width, Height - 15, Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(newimg);
         return icon;
     }
 
     private void Load_Images() {
-        Image imgexit = new ImageIcon(getClass().getResource("../Images/exit.png")).getImage();
+        Image imgexit = new ImageIcon(getClass().getResource("/Images/exit.png")).getImage();
         Image newimgexit = imgexit.getScaledInstance(exit.getWidth(), exit.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconexit = new ImageIcon(newimgexit);
         exit.setIcon(iconexit);
 
-        Image imganew = new ImageIcon(getClass().getResource("../Images/Acreate.png")).getImage();
+        Image imganew = new ImageIcon(getClass().getResource("/Images/Acreate.png")).getImage();
         Image newimganew = imganew.getScaledInstance(Anew.getWidth(), Anew.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconanew = new ImageIcon(newimganew);
         Anew.setIcon(iconanew);
 
-        Image imgFnew = new ImageIcon(getClass().getResource("../Images/Fcreate.png")).getImage();
+        Image imgFnew = new ImageIcon(getClass().getResource("/Images/Fcreate.png")).getImage();
         Image newimgFnew = imgFnew.getScaledInstance(Fnew.getWidth(), Fnew.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFnew = new ImageIcon(newimgFnew);
         Fnew.setIcon(iconFnew);
 
-        Image imgFup = new ImageIcon(getClass().getResource("../Images/Fup.png")).getImage();
+        Image imgFup = new ImageIcon(getClass().getResource("/Images/Fup.png")).getImage();
         Image newimgFup = imgFup.getScaledInstance(Fup.getWidth(), Fup.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFup = new ImageIcon(newimgFup);
         Fup.setIcon(iconFup);
 
-        Image imgUserLoad = new ImageIcon(getClass().getResource("../Images/Users.png")).getImage();
+        Image imgUserLoad = new ImageIcon(getClass().getResource("/Images/Users.png")).getImage();
         Image newimgUserLoad = imgUserLoad.getScaledInstance(Load_Users.getWidth(), Load_Users.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconUserLoad = new ImageIcon(newimgUserLoad);
         Load_Users.setIcon(iconUserLoad);
 
-        Image imgFilesLoad = new ImageIcon(getClass().getResource("../Images/Aload.png")).getImage();
+        Image imgFilesLoad = new ImageIcon(getClass().getResource("/Images/Aload.png")).getImage();
         Image newimgFilesLoad = imgFilesLoad.getScaledInstance(Files_Load.getWidth(), Files_Load.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconFilesLoad = new ImageIcon(newimgFilesLoad);
         Files_Load.setIcon(iconFilesLoad);
 
-        Image imgReports = new ImageIcon(getClass().getResource("../Images/Reports.png")).getImage();
+        Image imgReports = new ImageIcon(getClass().getResource("/Images/Reports.png")).getImage();
         Image newimgReports = imgReports.getScaledInstance(Reports.getWidth(), Reports.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon iconReports = new ImageIcon(newimgReports);
         Reports.setIcon(iconReports);
@@ -180,8 +180,8 @@ public class EDD_Platform extends javax.swing.JFrame {
 
     //Functionalities of System -----------------------------------------------
     private void Initial() {
-        if (Graph.Head != null) {
-            UpdatePath(Graph.Head.Folders.getFolderPath());
+        if (Current_Graph.Head != null) {
+            UpdatePath(Current_Graph.Head.Folders.getFolderPath());
             PaintPanel(Current_Path);
         } else {
             JOptionPane.showMessageDialog(null, "Error: Folder Root not Found", "Error", JOptionPane.ERROR_MESSAGE);
@@ -208,21 +208,28 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actionedit = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Name: " + aux.getName() + "  Text: " + aux.getText());
-                        NodeList parent = Graph.searchGraph(aux.getName());
+                        NodeList parent = Current_Graph.searchGraph(aux.getName());
                         if (parent != null) {
                             parent = parent.Parent;
                             if (parent != null) {
-                                String new_name = "" + JOptionPane.showInputDialog(null, "Input New Name for Folder", "Information", JOptionPane.INFORMATION_MESSAGE);
-                                if (!new_name.isEmpty()) {
-                                    Graph.edit(parent.Folders.getFolderPath(), aux.getText(), new_name);
-                                    CleanPanel();
-                                    PaintPanel(Current_Path);
+                                String new_name = JOptionPane.showInputDialog(null, "Input New Name for Folder", "Information", JOptionPane.INFORMATION_MESSAGE);
+                                if (new_name != null) {
+                                    if (!new_name.isEmpty()) {
+                                        if (!new_name.equals(aux.getText())) {
+                                            Current_Graph.rename(parent.Folders.getFolderPath(), aux.getText(), new_name);
+                                            Operations.add("Change Foldername: "+aux.getText()+ " to "+new_name, Current_User_Name);
+                                            CleanPanel();
+                                            PaintPanel(Current_Path);
 
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "The new Name and old Name is equals ", "Information", JOptionPane.INFORMATION_MESSAGE);
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "The new Name is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
+                                    }
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "The new name is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Without Changes", "Information", JOptionPane.INFORMATION_MESSAGE);
                                 }
-
                             }
                         }
                     }
@@ -231,10 +238,11 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actiondelete = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Name: " + aux.getName() + "  Text: " + aux.getText());
-                        Graph.Remove(aux.getName());
-                        CleanPanel();
-                        PaintPanel(Current_Path);
+                        if (Current_Graph.Remove(aux.getName())) {
+                            Operations.add("Delete Folder: " + aux.getText(), Current_User_Name);
+                            CleanPanel();
+                            PaintPanel(Current_Path);
+                        }
                     }
                 };
                 JPopupMenu menu = new JPopupMenu();
@@ -242,7 +250,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 open.addActionListener(actionopen);
                 menu.add(open);
 
-                JMenuItem edit = new JMenuItem("Edit Folder Name");
+                JMenuItem edit = new JMenuItem("Folder Rename");
                 edit.addActionListener(actionedit);
                 menu.add(edit);
 
@@ -280,7 +288,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actionopen = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList nodeavl = Graph.searchGraph(Current_Path);
+                        NodeList nodeavl = Current_Graph.searchGraph(Current_Path);
                         if (nodeavl != null) {
                             if (nodeavl.Files.Root != null) {
                                 FormOpenFiles open = new FormOpenFiles(f, true);
@@ -299,7 +307,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actioneditname = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList nodeavl = Graph.searchGraph(Current_Path);
+                        NodeList nodeavl = Current_Graph.searchGraph(Current_Path);
                         if (nodeavl != null) {
                             if (nodeavl.Files.Root != null) {
                                 String new_name = "" + JOptionPane.showInputDialog(null, "Input new name for " + aux.getText(), "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -316,7 +324,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actioneditcontent = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList nodeavl = Graph.searchGraph(Current_Path);
+                        NodeList nodeavl = Current_Graph.searchGraph(Current_Path);
                         if (nodeavl != null) {
                             if (nodeavl.Files.Root != null) {
                                 FormOpenFiles open = new FormOpenFiles(f, true);
@@ -335,7 +343,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actiondelete = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList nodeavl = Graph.searchGraph(Current_Path);
+                        NodeList nodeavl = Current_Graph.searchGraph(Current_Path);
                         if (nodeavl != null) {
                             if (nodeavl.Files.Root != null) {
                                 if (nodeavl.Files.Remove(aux.getName())) {
@@ -351,7 +359,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actionshare = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList temp = Graph.searchGraph(Current_Path);
+                        NodeList temp = Current_Graph.searchGraph(Current_Path);
                         String Content = temp.Files.getContent(aux.getName());
 
                         FormShare form = new FormShare(f, true);
@@ -388,7 +396,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                 ActionListener actiondownload = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NodeList temp = Graph.searchGraph(Current_Path);
+                        NodeList temp = Current_Graph.searchGraph(Current_Path);
                         String Content = temp.Files.getContent(aux.getName());
 
                         JFileChooser Choose = new JFileChooser();
@@ -477,8 +485,8 @@ public class EDD_Platform extends javax.swing.JFrame {
         int sep_ver = 30; //size etiqueta
         int aux = 0;
 
-        NodeList temp = Graph.Head;
-        NodeList temp2 = Graph.searchGraph(path);
+        NodeList temp = Current_Graph.Head;
+        NodeList temp2 = Current_Graph.searchGraph(path);
 
         if (temp2 != null) {
             count.setText("" + temp2.SubFolders.Size);
@@ -515,7 +523,7 @@ public class EDD_Platform extends javax.swing.JFrame {
             temp = temp.Next;
         }
 
-        NodeList tempavl = Graph.searchGraph(path);
+        NodeList tempavl = Current_Graph.searchGraph(path);
         if (tempavl != null) {
             if (tempavl.Files.Root != null) {
                 String Noes = tempavl.Files.Nodes(tempavl.Files.Root);
@@ -785,7 +793,7 @@ public class EDD_Platform extends javax.swing.JFrame {
                         if (!Users.Validate_user(fields[0])) {
                             if (fields[1].length() >= 8) {
                                 Users.Add(fields[0], fields[1]);
-                                Operations.add("Add User", Current_User_Name);
+                                Operations.add("Add User: " + fields[0], Current_User_Name);
                                 cont_user++;
                             } else {
                                 Errores.add(new Errors(fields[0], "The Password is Less than 8 Characters "));
@@ -811,16 +819,16 @@ public class EDD_Platform extends javax.swing.JFrame {
     }//GEN-LAST:event_Load_UsersMouseClicked
 
     private void ReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseClicked
-        NodeList aux = Graph.searchGraph(Current_Path);
+        NodeList aux = Current_Graph.searchGraph(Current_Path);
         if (aux != null) {
-            Reports reports = new Reports(Users, Operations, aux.Files, Graph);
+            Reports reports = new Reports(Users, Operations, aux.Files, Current_Graph);
             reports.setVisible(true);
         }
 
     }//GEN-LAST:event_ReportsMouseClicked
 
     private void Files_LoadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Files_LoadMouseClicked
-        NodeList aux = Graph.searchGraph(Current_Path);
+        NodeList aux = Current_Graph.searchGraph(Current_Path);
         if (aux != null) {
             int addfiles = aux.Files.BulkLoad(this, Current_User_Name);
             Operations.add("They were added " + addfiles + " files", Current_User_Name);
@@ -830,14 +838,14 @@ public class EDD_Platform extends javax.swing.JFrame {
     }//GEN-LAST:event_Files_LoadMouseClicked
 
     private void AnewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AnewMouseClicked
-        NodeList current_avl = Graph.searchGraph(Current_Path);
+        NodeList current_avl = Current_Graph.searchGraph(Current_Path);
         if (current_avl != null) {
             FormA a = new FormA(this, true);
             a.setVisible(true);
             String[] Data = a.Data;
             if (Data != null) {
                 if (current_avl.Files.add(Data[0], Data[1], Current_User_Name)) {
-                    Operations.add("Was added File: " + Data[1], Current_User_Name);
+                    Operations.add("Was added File: " + Data[0], Current_User_Name);
                     this.CleanPanel();
                     this.PaintPanel(Current_Path);
                 }
@@ -848,24 +856,27 @@ public class EDD_Platform extends javax.swing.JFrame {
     }//GEN-LAST:event_AnewMouseClicked
 
     private void FnewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FnewMouseClicked
-        String name = "" + JOptionPane.showInputDialog(null, "Input name for folder", "Information", JOptionPane.INFORMATION_MESSAGE);
-        if (!name.isEmpty()) {
-            NodeList temp = Graph.searchGraph(Current_Path + name + "/");
-            if (temp == null) {
-                Graph.add(name, Current_Path);
-                Operations.add("Was added Folder: " + name, Current_User_Name);
-                this.CleanPanel();
-                this.PaintPanel(Current_Path);
+        String name = JOptionPane.showInputDialog(null, "Input Name for folder", "Information", JOptionPane.INFORMATION_MESSAGE);
+        if (name != null) {
+            if (!name.isEmpty()) {
+                if (Current_Graph.add(name, Current_Path)) {
+                    Operations.add("Was added Folder: " + name, Current_User_Name);
+                    this.CleanPanel();
+                    this.PaintPanel(Current_Path);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Could Not Add Folder", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Warning: The Folder Name already Exist", "Information", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Field is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
+
         } else {
-            JOptionPane.showMessageDialog(null, "Field is Empty", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Not Changes", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_FnewMouseClicked
 
     private void FupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FupMouseClicked
-        NodeList temp = Graph.searchGraph(Current_Path);
+        NodeList temp = Current_Graph.searchGraph(Current_Path);
         if (temp != null) {
             temp = temp.Parent;
             if (temp != null) {

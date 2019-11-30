@@ -1,0 +1,101 @@
+digraph G {
+rankdir=LR
+node [shape = record, style=filled, fillcolor=seashell2]
+stack[label="
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: They were added 80 Users | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: ultimo | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: ElBromas | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Usuariot | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: kakarato | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Floyd | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Neymar | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: CarlosRuiz | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Dybala | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Melo | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Davis | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Lebron | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Futbol | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: BadBunny | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: AnuelAA | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Ozuna | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Vegetta | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Goku | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Yotsuba | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Eren | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Frijolitos | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: NachoconQueso_78 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Xvideos | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Xhamster | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Unicornio | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Hola123 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Sith | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: DarthVader | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: JulioKK | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: titoElBambino | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Admin123 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: PizzaHut69 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Campero | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Pandillero | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Hackerman | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: UsuarioOnline | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Repetido | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: AuronPlay | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: XXXtentacion | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Tostada | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Pan | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Streamer | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: ElKevin | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Antonio | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Usuario444 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Usuario123 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Jason | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Witch | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Ninnette | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Messi | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Comandante | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: SpinoJefe | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: ElKriss | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: LuisEnrique | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Ingeniero | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Juanito69 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Alex4191 | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Cartel | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Omar | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Carlos | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Jose | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Manuel | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Dexter | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Gabriela | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Osvaldo | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Ribelino | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Jorrge | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Enrique | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Julio | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Cintia | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Paola | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Eric | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Howard M | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Penny | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Parsons | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Emily | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Eliou | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Dennis | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Damaris | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Darlin | 
+Date: 22/11/2019 Hour: 04:31:24\n UserName: admin\n Operation: Add User: Jefferson | 
+Date: 22/11/2019 Hour: 04:31:20\n UserName: admin\n Operation: They were added 20 files | 
+Date: 22/11/2019 Hour: 04:31:13\n UserName: admin\n Operation: Was added Folder: El Cartel de Los Sapos | 
+Date: 22/11/2019 Hour: 04:31:02\n UserName: admin\n Operation: Was added Folder: Soy Leyenda | 
+Date: 22/11/2019 Hour: 04:30:50\n UserName: admin\n Operation: Was added Folder: Control Machete | 
+Date: 22/11/2019 Hour: 04:30:42\n UserName: admin\n Operation: Was added Folder: Cartel | 
+Date: 22/11/2019 Hour: 04:30:39\n UserName: admin\n Operation: Was added Folder: Ckan | 
+Date: 22/11/2019 Hour: 04:30:35\n UserName: admin\n Operation: Was added Folder: Merengue | 
+Date: 22/11/2019 Hour: 04:30:32\n UserName: admin\n Operation: Was added Folder: Salsa | 
+Date: 22/11/2019 Hour: 04:30:29\n UserName: admin\n Operation: Was added Folder: Rap | 
+Date: 22/11/2019 Hour: 04:30:24\n UserName: admin\n Operation: Was added Folder: Musica | 
+Date: 22/11/2019 Hour: 04:30:21\n UserName: admin\n Operation: Was added Folder: Series | 
+Date: 22/11/2019 Hour: 04:30:19\n UserName: admin\n Operation: Was added Folder: Peliculas | 
+Date: 22/11/2019 Hour: 04:30:14\n UserName: admin\n Operation: Login User
+"];
+aux [shape = plaintext, label="Operaciones: 94"]
+}

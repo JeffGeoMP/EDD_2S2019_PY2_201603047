@@ -1,0 +1,92 @@
+digraph G {
+rankdir = TB;
+node [shape = rectangle, style=filled, fillcolor=seashell2];
+graph [nodesep = 0.5, splines=ortho];
+FRoot [label="Root/"]
+FRootPeliculas [label="Peliculas"]
+FRootSeries [label="Series"]
+FRootMusica [label="Musica"]
+FRootMusicaRap [label="Rap"]
+FRootMusicaSalsa [label="Salsa"]
+FRootMusicaMerengue [label="Merengue"]
+FRootMusicaRapCkan [label="Ckan"]
+FRootMusicaRapCartel [label="Cartel"]
+FRootMusicaRapControlMachete [label="Control Machete"]
+FRootPeliculasSoyLeyenda [label="Soy Leyenda"]
+FRootSeriesElCarteldeLosSapos [label="El Cartel de Los Sapos"]
+Matrix->FRoot
+FRoot -> FRootPeliculas
+FRootPeliculas -> FRootSeries
+FRootSeries -> FRootMusica
+FRootMusica -> FRootMusicaRap
+FRootMusicaRap -> FRootMusicaSalsa
+FRootMusicaSalsa -> FRootMusicaMerengue
+FRootMusicaMerengue -> FRootMusicaRapCkan
+FRootMusicaRapCkan -> FRootMusicaRapCartel
+FRootMusicaRapCartel -> FRootMusicaRapControlMachete
+FRootMusicaRapControlMachete -> FRootPeliculasSoyLeyenda
+FRootPeliculasSoyLeyenda -> FRootSeriesElCarteldeLosSapos
+CRoot [label="Root/"]
+CRootPeliculas [label="Peliculas"]
+CRootSeries [label="Series"]
+CRootMusica [label="Musica"]
+CRootMusicaRap [label="Rap"]
+CRootMusicaSalsa [label="Salsa"]
+CRootMusicaMerengue [label="Merengue"]
+CRootMusicaRapCkan [label="Ckan"]
+CRootMusicaRapCartel [label="Cartel"]
+CRootMusicaRapControlMachete [label="Control Machete"]
+CRootPeliculasSoyLeyenda [label="Soy Leyenda"]
+CRootSeriesElCarteldeLosSapos [label="El Cartel de Los Sapos"]
+Matrix->CRoot
+CRoot -> CRootPeliculas
+CRootPeliculas -> CRootSeries
+CRootSeries -> CRootMusica
+CRootMusica -> CRootMusicaRap
+CRootMusicaRap -> CRootMusicaSalsa
+CRootMusicaSalsa -> CRootMusicaMerengue
+CRootMusicaMerengue -> CRootMusicaRapCkan
+CRootMusicaRapCkan -> CRootMusicaRapCartel
+CRootMusicaRapCartel -> CRootMusicaRapControlMachete
+CRootMusicaRapControlMachete -> CRootPeliculasSoyLeyenda
+CRootPeliculasSoyLeyenda -> CRootSeriesElCarteldeLosSapos
+NRootPeliculas [label ="Root/Peliculas/"]
+NRootSeries [label ="Root/Series/"]
+NRootMusica [label ="Root/Musica/"]
+NRootMusicaRap [label ="Root/Musica/Rap/"]
+NRootMusicaSalsa [label ="Root/Musica/Salsa/"]
+NRootMusicaMerengue [label ="Root/Musica/Merengue/"]
+NRootMusicaRapCkan [label ="Root/Musica/Rap/Ckan/"]
+NRootMusicaRapCartel [label ="Root/Musica/Rap/Cartel/"]
+NRootMusicaRapControlMachete [label ="Root/Musica/Rap/Control Machete/"]
+NRootPeliculasSoyLeyenda [label ="Root/Peliculas/Soy Leyenda/"]
+NRootSeriesElCarteldeLosSapos [label ="Root/Series/El Cartel de Los Sapos/"]
+NRootPeliculas -> NRootSeries
+NRootSeries -> NRootMusica
+NRootMusicaRap -> NRootMusicaSalsa
+NRootMusicaSalsa -> NRootMusicaMerengue
+NRootMusicaRapCkan -> NRootMusicaRapCartel
+NRootMusicaRapCartel -> NRootMusicaRapControlMachete
+FRoot -> NRootPeliculas[constraint = false]
+FRootPeliculas -> NRootPeliculasSoyLeyenda[constraint = false]
+FRootSeries -> NRootSeriesElCarteldeLosSapos[constraint = false]
+FRootMusica -> NRootMusicaRap[constraint = false]
+FRootMusicaRap -> NRootMusicaRapCkan[constraint = false]
+{rank=same; FRoot NRootPeliculas NRootSeries NRootMusica }
+{rank=same; FRootPeliculas NRootPeliculasSoyLeyenda }
+{rank=same; FRootSeries NRootSeriesElCarteldeLosSapos }
+{rank=same; FRootMusica NRootMusicaRap NRootMusicaSalsa NRootMusicaMerengue }
+{rank=same; FRootMusicaRap NRootMusicaRapCkan NRootMusicaRapCartel NRootMusicaRapControlMachete }
+CRootPeliculas->NRootPeliculas
+CRootSeries->NRootSeries
+CRootMusica->NRootMusica
+CRootMusicaRap->NRootMusicaRap
+CRootMusicaSalsa->NRootMusicaSalsa
+CRootMusicaMerengue->NRootMusicaMerengue
+CRootMusicaRapCkan->NRootMusicaRapCkan
+CRootMusicaRapCartel->NRootMusicaRapCartel
+CRootMusicaRapControlMachete->NRootMusicaRapControlMachete
+CRootPeliculasSoyLeyenda->NRootPeliculasSoyLeyenda
+CRootSeriesElCarteldeLosSapos->NRootSeriesElCarteldeLosSapos
+{rank=same; Matrix  CRoot CRootPeliculas CRootSeries CRootMusica CRootMusicaRap CRootMusicaSalsa CRootMusicaMerengue CRootMusicaRapCkan CRootMusicaRapCartel CRootMusicaRapControlMachete CRootPeliculasSoyLeyenda CRootSeriesElCarteldeLosSapos}
+}

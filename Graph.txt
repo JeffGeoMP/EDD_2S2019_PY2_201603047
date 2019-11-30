@@ -1,0 +1,27 @@
+digraph G {
+graph [layout = circo]
+node [shape = circle, style=filled, fillcolor=seashell2]
+Root [label= "Root/\n Directories: 3"]
+RootPeliculas [label= "Peliculas\n Directories: 1"]
+RootSeries [label= "Series\n Directories: 1"]
+RootMusica [label= "Musica\n Directories: 3"]
+RootMusicaRap [label= "Rap\n Directories: 3"]
+RootMusicaSalsa [label= "Salsa\n Directories: 0"]
+RootMusicaMerengue [label= "Merengue\n Directories: 0"]
+RootMusicaRapCkan [label= "Ckan\n Directories: 0"]
+RootMusicaRapCartel [label= "Cartel\n Directories: 0"]
+RootMusicaRapControlMachete [label= "Control Machete\n Directories: 0"]
+RootPeliculasSoyLeyenda [label= "Soy Leyenda\n Directories: 0"]
+RootSeriesElCarteldeLosSapos [label= "El Cartel de Los Sapos\n Directories: 0"]
+Root->RootPeliculas
+Root->RootSeries
+Root->RootMusica
+RootMusica->RootMusicaRap
+RootMusica->RootMusicaSalsa
+RootMusica->RootMusicaMerengue
+RootMusicaRap->RootMusicaRapCkan
+RootMusicaRap->RootMusicaRapCartel
+RootMusicaRap->RootMusicaRapControlMachete
+RootPeliculas->RootPeliculasSoyLeyenda
+RootSeries->RootSeriesElCarteldeLosSapos
+}

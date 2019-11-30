@@ -1,0 +1,5 @@
+digraph G {
+rankdir=TB
+node [shape = record, style=filled, fillcolor=seashell2]
+pyths[label="Filename: pyth.s\n Content: sss\n Balance Factor: 0\n Height: 0\n TimeStamp: 22/11/2019 02:29:12\n Owner: admin"]
+}
